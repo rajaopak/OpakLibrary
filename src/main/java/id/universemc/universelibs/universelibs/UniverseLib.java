@@ -1,11 +1,7 @@
 package id.universemc.universelibs.universelibs;
 
 import id.universemc.universelibs.universelibs.example.TestCommand;
-import id.universemc.universelibs.universelibs.example.TestSubCommand;
-import id.universemc.universelibs.universelibs.commands.SpigotCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Arrays;
 
 public final class UniverseLib extends JavaPlugin {
 

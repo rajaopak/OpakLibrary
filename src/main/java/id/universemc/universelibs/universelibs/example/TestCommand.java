@@ -1,6 +1,5 @@
 package id.universemc.universelibs.universelibs.example;
 
-import id.universemc.universelibs.universelibs.UniverseLib;
 import id.universemc.universelibs.universelibs.commands.SpigotCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -1,7 +1,7 @@
 # UniverseLibs
 A Library for minecraft
 
-##License
+## License
 MIT License
 
 ```

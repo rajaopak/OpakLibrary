@@ -1,7 +1,7 @@
 package id.universemc.universelibs.universelibs;
 
-import id.universemc.universelibs.universelibs.Example.TestCommand;
-import id.universemc.universelibs.universelibs.Example.TestSubCommand;
+import id.universemc.universelibs.universelibs.example.TestCommand;
+import id.universemc.universelibs.universelibs.example.TestSubCommand;
 import id.universemc.universelibs.universelibs.commands.SpigotCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,11 +20,12 @@ public final class UniverseLib extends JavaPlugin {
         // Plugin startup logic
         INSTANCE = this;
         UniverseLibs.init(this);
-        new SpigotCommand(this, "test", Arrays.asList("test123", "t"), "perm.test",
+        new TestCommand(this);
+        /*new SpigotCommand(this, "test", Arrays.asList("test123", "t"), "perm.test",
                 sender -> sender.sendMessage("No Arguments"),
                 sender -> sender.sendMessage("No Permission"),
                 sender -> sender.sendMessage("No SubCommand"),
-                new TestSubCommand()).register();
+                new TestSubCommand()).register();*/
     }
 
     @Override

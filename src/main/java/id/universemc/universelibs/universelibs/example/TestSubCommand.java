@@ -1,18 +1,15 @@
-package id.universemc.universelibs.universelibs.Example;
+package id.universemc.universelibs.universelibs.example;
 
 import id.universemc.universelibs.universelibs.commands.SubCommand;
 import id.universemc.universelibs.universelibs.inventory.SimpleInventory;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

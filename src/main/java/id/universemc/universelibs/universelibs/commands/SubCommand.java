@@ -1,0 +1,27 @@
+package id.universemc.universelibs.universelibs.commands;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+/**
+ * modified by rajaopak
+ * @author aglerr
+ */
+public abstract class SubCommand {
+
+    @NotNull
+    public abstract String getName();
+
+    @Nullable
+    public abstract String getPermission();
+
+    @Nullable
+    public abstract List<String> parseTabCompletions(JavaPlugin plugin, CommandSender sender, String[] args);
+
+    public abstract void execute(JavaPlugin plugin, CommandSender sender, String[] args);
+
+}

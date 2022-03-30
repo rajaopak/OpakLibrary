@@ -49,7 +49,7 @@ public class BaseCommand extends Command implements Listener {
         this.setLabel(COMMAND_NAME);
 
         for (SubCommand subCommand : subCommands) {
-            this.subCommandMap.put(subCommand.getName(), subCommand);
+            this.subCommandMap.put(subCommand.getName().toLowerCase(), subCommand);
             this.setUsage("/" + COMMAND_NAME + " " + subCommand.getUsage());
         }
     }

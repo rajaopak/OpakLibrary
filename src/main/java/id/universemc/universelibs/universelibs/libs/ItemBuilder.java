@@ -38,31 +38,31 @@ public class ItemBuilder {
         }
     }
 
-    public ItemBuilder type(Material material) {
+    public ItemBuilder setType(Material material) {
         this.item.setType(material);
         return this;
     }
 
-    public ItemBuilder data(int data) {
-        return durability((short) data);
+    public ItemBuilder setData(int data) {
+        return setDurability((short) data);
     }
 
     @Deprecated
-    public ItemBuilder durability(short durability) {
+    public ItemBuilder setDurability(short durability) {
         this.item.setDurability(durability);
         return this;
     }
 
-    public ItemBuilder amount(int amount) {
+    public ItemBuilder setAmount(int amount) {
         this.item.setAmount(amount);
         return this;
     }
 
-    public ItemBuilder enchant(Enchantment enchantment) {
-        return enchant(enchantment, 1);
+    public ItemBuilder setEnchant(Enchantment enchantment) {
+        return setEnchant(enchantment, 1);
     }
 
-    public ItemBuilder enchant(Enchantment enchantment, int level) {
+    public ItemBuilder setEnchant(Enchantment enchantment, int level) {
         this.meta.addEnchant(enchantment, level, true);
         return this;
     }
@@ -89,20 +89,20 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder name(String name) {
+    public ItemBuilder setName(String name) {
         this.meta.setDisplayName(Common.color(name));
         return this;
     }
 
-    public ItemBuilder lore(String lore) {
-        return lore(Collections.singletonList(lore));
+    public ItemBuilder setLore(String lore) {
+        return setLore(Collections.singletonList(lore));
     }
 
-    public ItemBuilder lore(String... lore) {
-        return lore(Arrays.asList(lore));
+    public ItemBuilder setLore(String... lore) {
+        return setLore(Arrays.asList(lore));
     }
 
-    public ItemBuilder lore(List<String> lore) {
+    public ItemBuilder setLore(List<String> lore) {
         this.meta.setLore(Common.color(lore));
         return this;
     }
@@ -111,11 +111,11 @@ public class ItemBuilder {
         List<String> lore = this.meta.getLore();
 
         if (lore == null) {
-            return lore(line);
+            return setLore(line);
         }
 
         lore.add(line);
-        return lore(lore);
+        return setLore(lore);
     }
 
     public ItemBuilder addLore(String... lines) {
@@ -126,20 +126,20 @@ public class ItemBuilder {
         List<String> lore = this.meta.getLore();
 
         if (lore == null) {
-            return lore(lines);
+            return setLore(lines);
         }
 
         lore.addAll(lines);
-        return lore(lore);
+        return setLore(lore);
     }
 
-    public ItemBuilder flags(ItemFlag... flags) {
+    public ItemBuilder setFlags(ItemFlag... flags) {
         this.meta.addItemFlags(flags);
         return this;
     }
 
-    public ItemBuilder flags() {
-        return flags(ItemFlag.values());
+    public ItemBuilder setFlags() {
+        return setFlags(ItemFlag.values());
     }
 
     public ItemBuilder removeFlags(ItemFlag... flags) {
@@ -190,17 +190,17 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder skull(String identifier){
+    public ItemBuilder setSkull(String identifier){
         SkullUtils.applySkin(this.meta, identifier);
         return this;
     }
 
-    public ItemBuilder skull(OfflinePlayer identifier){
+    public ItemBuilder setSkull(OfflinePlayer identifier){
         SkullUtils.applySkin(this.meta, identifier);
         return this;
     }
 
-    public ItemBuilder skull(UUID identifier){
+    public ItemBuilder setSkull(UUID identifier){
         SkullUtils.applySkin(this.meta, identifier);
         return this;
     }

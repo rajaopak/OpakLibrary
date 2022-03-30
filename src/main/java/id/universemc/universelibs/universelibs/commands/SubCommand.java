@@ -17,6 +17,9 @@ public abstract class SubCommand {
     public abstract String getName();
 
     @Nullable
+    public abstract String getUsage();
+
+    @Nullable
     public abstract String getPermission();
 
     @Nullable

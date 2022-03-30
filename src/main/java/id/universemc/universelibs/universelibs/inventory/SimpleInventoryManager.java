@@ -1,5 +1,6 @@
 package id.universemc.universelibs.universelibs.inventory;
 
+import id.universemc.universelibs.universelibs.libs.Common;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,6 +43,7 @@ public class SimpleInventoryManager {
         }
 
         Bukkit.getPluginManager().registerEvents(new InventoryListener(plugin), plugin);
+        Common.log("SimpleInventory registered");
     }
 
     /**

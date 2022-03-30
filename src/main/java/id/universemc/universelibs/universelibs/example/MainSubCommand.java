@@ -1,8 +1,11 @@
 package id.universemc.universelibs.universelibs.example;
 
 import id.universemc.universelibs.universelibs.commands.SubCommand;
-import id.universemc.universelibs.universelibs.libs.Common;
+import id.universemc.universelibs.universelibs.inventory.SimpleInventory;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,20 +13,21 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public class TestSubCommand extends SubCommand {
+public class MainSubCommand extends SubCommand {
+
     @Override
     public @NotNull String getName() {
-        return "Hello";
+        return "gui";
     }
 
     @Override
     public @Nullable String getUsage() {
-        return "Hello";
+        return "gui";
     }
 
     @Override
     public @Nullable String getPermission() {
-        return null;
+        return "perm.test.gui";
     }
 
     @Override
@@ -33,6 +37,8 @@ public class TestSubCommand extends SubCommand {
 
     @Override
     public void execute(JavaPlugin plugin, CommandSender sender, String[] args) {
-        Common.sendMessage(sender, "&eHello World!");
+        SimpleInventory inv = new SimpleInventory(54, "Test Inventory");
+        inv.setItems(inv.getBorders(), new ItemStack(Material.GRAY_STAINED_GLASS_PANE));
+        inv.open((Player) sender);
     }
 }

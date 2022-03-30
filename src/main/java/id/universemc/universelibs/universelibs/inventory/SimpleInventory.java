@@ -202,6 +202,14 @@ public class SimpleInventory implements InventoryHolder {
         }
     }
 
+    public void setFilterItem(ItemStack item){
+        for (int i = 0; i < this.inventory.getSize(); i++) {
+            if (this.inventory.getItem(i) == null) {
+                setItem(i, item);
+            }
+        }
+    }
+
     /**
      * Add an {@link ItemStack} to the inventory on multiples slots with a click handler.
      *

@@ -3,6 +3,10 @@ package id.universemc.universelibs.universelibs.commands;
 import id.universemc.universelibs.universelibs.libs.Common;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +19,7 @@ import java.util.function.Consumer;
  * modified by rajaopak
  * @author aglerr
  */
-public class SpigotCommand extends Command /*implements CommandExecutor, TabExecutor*/ {
+public class BaseCommand extends Command implements Listener {
 
     private final Map<String, SubCommand> subCommandMap = new HashMap<>();
 
@@ -27,10 +31,10 @@ public class SpigotCommand extends Command /*implements CommandExecutor, TabExec
     private final Consumer<CommandSender> onNoPermission;
     private final Consumer<CommandSender> onNoSubcommand;
 
-    public SpigotCommand(JavaPlugin plugin, @NotNull String name, @NotNull List<String> aliases,
-                         @Nullable String COMMAND_PERMISSION, Consumer<CommandSender> onNoArgs,
-                         Consumer<CommandSender> onNoPermission, Consumer<CommandSender> onNoSubcommand,
-                         SubCommand... subCommands) {
+    public BaseCommand(JavaPlugin plugin, @NotNull String name, @NotNull List<String> aliases,
+                       @Nullable String COMMAND_PERMISSION, Consumer<CommandSender> onNoArgs,
+                       Consumer<CommandSender> onNoPermission, Consumer<CommandSender> onNoSubcommand,
+                       SubCommand... subCommands) {
         super(name, "universe commands", "/" + name, aliases);
         this.plugin = plugin;
         this.COMMAND_NAME = name;
@@ -46,31 +50,21 @@ public class SpigotCommand extends Command /*implements CommandExecutor, TabExec
 
         for (SubCommand subCommand : subCommands) {
             this.subCommandMap.put(subCommand.getName(), subCommand);
+            this.setUsage("/" + COMMAND_NAME + " " + subCommand.getUsage());
         }
     }
 
     public void register() {
+        Bukkit.getPluginManager().registerEvents(this, plugin);
         try {
             Field commandMapField = Bukkit.getServer().getClass().getDeclaredField("commandMap");
             commandMapField.setAccessible(true);
             CommandMap commandMap = (CommandMap) commandMapField.get(Bukkit.getServer());
             commandMap.register(getLabel(), this);
         } catch (Exception e) {
-            Common.log("§cFailed to register command! [" + getName() + "]");
+            Common.log("&cFailed to register command! [" + getName() + "]");
             e.printStackTrace();
         }
-        /*plugin.getCommand(COMMAND_NAME).setExecutor(this);
-        plugin.getCommand(COMMAND_NAME).setTabCompleter(this);
-        plugin.getCommand(COMMAND_NAME).getAliases().addAll(COMMAND_ALIASES);
-        try {
-            Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            bukkitCommandMap.setAccessible(true);
-            ((CommandMap) bukkitCommandMap.get(Bukkit.getServer())).register(COMMAND_NAME, plugin.getCommand(COMMAND_NAME));
-            bukkitCommandMap.setAccessible(false);
-        } catch (NoSuchFieldException | IllegalAccessException ex) {
-            Common.log("&cFailed to register command '" + COMMAND_NAME + "'");
-            ex.printStackTrace();
-        }*/
     }
 
     @Override
@@ -129,59 +123,19 @@ public class SpigotCommand extends Command /*implements CommandExecutor, TabExec
         return new ArrayList<>();
     }
 
-/*    @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(COMMAND_PERMISSION != null && !sender.hasPermission(COMMAND_PERMISSION)){
-            onNoPermission.accept(sender);
-            return true;
-        }
-        if (args.length == 0) {
-            onNoArgs.accept(sender);
-            return true;
+    @EventHandler
+    public void onPlayerCommand(PlayerCommandSendEvent event) {
+
+        Player p = event.getPlayer();
+
+        if (event.getCommands().stream().anyMatch(command -> command.startsWith(COMMAND_NAME))) {
+            if (COMMAND_PERMISSION != null && p.hasPermission(COMMAND_PERMISSION)) {
+                event.getCommands().remove(COMMAND_NAME);
+            } else {
+                event.getCommands().add(COMMAND_NAME);
+            }
         }
 
-        SubCommand subCommand = this.subCommandMap.get(args[0].toLowerCase());
-        if (subCommand == null) {
-            onNoSubcommand.accept(sender);
-            return true;
-        }
-
-        if (subCommand.getPermission() != null &&
-                !sender.hasPermission(subCommand.getPermission())) {
-            onNoPermission.accept(sender);
-            return true;
-        }
-
-        subCommand.execute(plugin, sender, args);
-        return true;
     }
 
-    @Nullable
-    @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1) {
-            List<String> suggestions = new ArrayList<>();
-            for (SubCommand subCommand : subCommandMap.values()) {
-                if (subCommand.getPermission() == null) {
-                    suggestions.add(subCommand.getName());
-                    continue;
-                }
-                if (sender.hasPermission(subCommand.getPermission())) {
-                    suggestions.add(subCommand.getName());
-                }
-            }
-            return suggestions;
-        }
-        if (args.length >= 2) {
-            SubCommand subCommand = subCommandMap.get(args[0].toLowerCase());
-            if (subCommand == null) {
-                return new ArrayList<>();
-            }
-            if (subCommand.getPermission() == null ||
-                    sender.hasPermission(subCommand.getPermission())) {
-                return subCommand.parseTabCompletions(plugin, sender, args);
-            }
-        }
-        return new ArrayList<>();
-    }*/
 }

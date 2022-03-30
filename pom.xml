@@ -6,7 +6,7 @@
 
     <groupId>id.universemc.universelibs</groupId>
     <artifactId>UniverseLibs</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
 
     <name>UniverseLibs</name>
@@ -25,15 +25,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
-                <configuration>
-                    <finalName>UniverseLibs-${project.version}</finalName>
-                    <outputDirectory>C:\Users\Nafis\Downloads\server\bukkit\plugins</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>

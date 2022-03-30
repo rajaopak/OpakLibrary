@@ -14,6 +14,6 @@ public class UniverseLibs {
         INSTANCE = plugin;
         SimpleInventoryManager.register(plugin);
         PLACEHOLDER_API = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
-        Common.log("&aUniverseLibs has been enabled!");
+        Common.log("&aUniverseLibs Successfully Loaded!");
     }
 }

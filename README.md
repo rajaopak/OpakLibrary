@@ -1,7 +1,36 @@
 # UniverseLibs
 A Library for minecraft
 
-## License
+# How to use
+
+Initialize the library in your main class:
+```java
+UniverseLibs.init(plugin);
+```
+
+Using maven to download the library:
+#### Repository
+```xml
+<repository>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repository>
+```
+
+#### Dependencies
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.github.UniverseNetwork</groupId>
+        <artifactId>UniverseLibs</artifactId>
+        <version>0.0.2</version>
+    </dependency>
+</dependencies>
+```
+
+# License
 MIT License
 
 ```

@@ -1,6 +1,9 @@
 package id.universemc.universelibs.universelibs.inventory;
 
+import id.universemc.universelibs.universelibs.libs.ItemBuilder;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -283,10 +286,27 @@ public class SimpleInventory implements InventoryHolder {
     /**
      * Open the inventory to a player.
      *
-     * @param player The player to open the menu.
+     * @param entity The player to open the menu.
      */
-    public void open(Player player) {
-        player.openInventory(this.inventory);
+    public void open(HumanEntity entity) {
+        entity.openInventory(this.inventory);
+    }
+
+    /**
+     * Close the inventory to a player.
+     *
+     * @param entity player to check if he can open the inventory.
+     */
+    public void close(HumanEntity entity){
+        entity.closeInventory();
+    }
+
+    public void update() {
+        for (int i = 0; i < this.inventory.getSize(); i++) {
+            if (this.inventory.getItem(i) != null) {
+                this.inventory.setItem(i, this.inventory.getItem(i));
+            }
+        }
     }
 
     /**

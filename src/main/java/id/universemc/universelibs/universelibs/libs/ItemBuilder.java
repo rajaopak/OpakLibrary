@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -20,10 +21,10 @@ import java.util.function.Consumer;
  *
  * @author MrMicky
  */
-public class ItemBuilder {
+public class ItemBuilder implements Cloneable {
 
-    private final ItemStack item;
-    private final ItemMeta meta;
+    private ItemStack item;
+    private ItemMeta meta;
 
     public ItemBuilder(Material material) {
         this(new ItemStack(material));
@@ -38,9 +39,66 @@ public class ItemBuilder {
         }
     }
 
+    @NotNull
+    public static ItemBuilder from(@NotNull ItemStack itemStack) {
+        return new ItemBuilder(itemStack);
+    }
+
+    @NotNull
+    public static ItemBuilder from(@NotNull Material material) {
+        return new ItemBuilder(material);
+    }
+
     public ItemBuilder setType(Material material) {
         this.item.setType(material);
         return this;
+    }
+
+    public ItemStack getItem() {
+        return item;
+    }
+
+    public ItemMeta getMeta() {
+        return meta;
+    }
+
+    public ItemBuilder setItem(ItemStack item) {
+        this.item = item;
+        return this;
+    }
+
+    public ItemBuilder setMeta(ItemMeta meta) {
+        this.meta = meta;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemBuilder{" +
+                "item=" + item.toString() +
+                ", meta=" + meta.toString() +
+                '}';
+    }
+
+    @NotNull
+    @Override
+    public ItemBuilder clone(){
+        try {
+            ItemBuilder clone = (ItemBuilder) super.clone();
+
+            if (this.item != null) {
+                clone.item = this.item.clone();
+            }
+
+            if (this.meta != null) {
+                clone.meta = this.meta.clone();
+            }
+
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            Common.log("&cFailed to clone ItemBuilder!");
+            throw new Error(e);
+        }
     }
 
     public ItemBuilder setData(int data) {
@@ -63,7 +121,25 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setEnchant(Enchantment enchantment, int level) {
-        this.meta.addEnchant(enchantment, level, true);
+        return setEnchant(enchantment, level, false);
+    }
+
+    public ItemBuilder setEnchant(Enchantment enchantment, int level, boolean ignoreLevelRestriction) {
+        this.meta.addEnchant(enchantment, level, ignoreLevelRestriction);
+        return this;
+    }
+
+    public ItemBuilder setEnchants(Map<Enchantment, Integer> enchants) {
+        for (Map.Entry<Enchantment, Integer> enchantment : enchants.entrySet()) {
+            setEnchant(enchantment.getKey(), enchantment.getValue());
+        }
+        return this;
+    }
+
+    public ItemBuilder setEnchants(Map<Enchantment, Integer> enchants, boolean ignoreLevelRestriction) {
+        for (Map.Entry<Enchantment, Integer> enchantment : enchants.entrySet()) {
+            setEnchant(enchantment.getKey(), enchantment.getValue(), ignoreLevelRestriction);
+        }
         return this;
     }
 
@@ -160,6 +236,40 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setUnbreakable(boolean unbreakable) {
+        this.meta.setUnbreakable(unbreakable);
+        return this;
+    }
+
+    public ItemBuilder setUnbreakable() {
+        return setUnbreakable(true);
+    }
+
+    public ItemBuilder removeUnbreakable() {
+        if (this.meta.isUnbreakable()) {
+            this.meta.setUnbreakable(false);
+        }
+        return this;
+    }
+
+    public ItemBuilder setGlowing() {
+        return setGlowing(true);
+    }
+
+    public ItemBuilder setGlowing(boolean glowing) {
+        if (glowing) {
+            setEnchant(Enchantment.LURE, 1);
+            setFlags(ItemFlag.HIDE_ENCHANTS);
+            return this;
+        }
+
+        for (final Enchantment enchantment : meta.getEnchants().keySet()) {
+            meta.removeEnchant(enchantment);
+        }
+
+        return this;
+    }
+
     public ItemBuilder pdc(NamespacedKey key, String s){
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, s);
         return this;
@@ -200,7 +310,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setSkull(UUID identifier){
+    public ItemBuilder setSkull(UUID identifier) {
         SkullUtils.applySkin(this.meta, identifier);
         return this;
     }

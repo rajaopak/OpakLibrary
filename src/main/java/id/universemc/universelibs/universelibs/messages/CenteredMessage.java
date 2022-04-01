@@ -1,14 +1,14 @@
 package id.universemc.universelibs.universelibs.messages;
 
 import id.universemc.universelibs.universelibs.libs.Common;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class CenteredMessage {
 
     private final static int CENTER_PX = 154;
 
-    public static void sendMessage(Player player, @NotNull String message) {
+    public static void sendMessage(CommandSender sender, @NotNull String message) {
         message = Common.color(message);
 
         int messagePxSize = 0;
@@ -37,7 +37,7 @@ public class CenteredMessage {
             sb.append(" ");
             compensated += spaceLength;
         }
-        player.sendMessage(sb + message);
+        sender.sendMessage(sb + message);
     }
 
     public static String centerMessage(@NotNull String message) {

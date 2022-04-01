@@ -129,7 +129,7 @@ public class BaseCommand extends Command implements Listener {
         Player p = event.getPlayer();
 
         if (event.getCommands().stream().anyMatch(command -> command.startsWith(COMMAND_NAME))) {
-            if (COMMAND_PERMISSION != null && p.hasPermission(COMMAND_PERMISSION)) {
+            if (COMMAND_PERMISSION != null && !p.hasPermission(COMMAND_PERMISSION)) {
                 event.getCommands().remove(COMMAND_NAME);
             } else {
                 event.getCommands().add(COMMAND_NAME);

@@ -35,7 +35,7 @@ public class Common {
 
     public static String getPrefix() {
         if (USE_PREFIX)
-            return PREFIX + " ";
+            return color(PREFIX) + " ";
         return "";
     }
 
@@ -78,14 +78,18 @@ public class Common {
         }
 
         if(sender instanceof Player && UniverseLibs.PLACEHOLDER_API){
-            if (usePrefix)
-                sender.sendMessage(PlaceholderAPI.setPlaceholders((Player) sender, color(getPrefix()+ message)));
+            if (usePrefix) {
+                sender.sendMessage(PlaceholderAPI.setPlaceholders((Player) sender, color(getPrefix() + message)));
+                return;
+            }
             sender.sendMessage(PlaceholderAPI.setPlaceholders((Player) sender, color(message)));
             return;
         }
 
-        if (usePrefix)
-            sender.sendMessage(color(getPrefix()+ message));
+        if (usePrefix) {
+            sender.sendMessage(color(getPrefix() + message));
+            return;
+        }
         sender.sendMessage(color(message));
     }
 
@@ -113,9 +117,7 @@ public class Common {
 
     public static void log(String... messages) {
         for (String message : messages) {
-            Bukkit.getConsoleSender().sendMessage(
-                    getPrefix() + color("&r" + message)
-            );
+            Bukkit.getLogger().info(color(getPrefix() + "&r" + message));
         }
     }
 

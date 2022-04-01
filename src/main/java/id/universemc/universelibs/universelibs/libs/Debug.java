@@ -19,9 +19,7 @@ public class Debug {
             return;
         }
         for (String message : messages) {
-            Bukkit.getConsoleSender().sendMessage(
-                    Common.PREFIX + " " + Common.color(message)
-            );
+            Common.log(Common.getPrefix() + Common.color(message));
         }
     }
 

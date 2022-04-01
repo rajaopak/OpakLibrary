@@ -1,6 +1,7 @@
 package id.universemc.universelibs.universelibs.inventory;
 
 import id.universemc.universelibs.universelibs.libs.Common;
+import id.universemc.universelibs.universelibs.libs.Task;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -95,7 +96,7 @@ public class SimpleInventoryManager {
                 SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
 
                 if (inv.handleClose(e)) {
-                    Bukkit.getScheduler().runTask(this.plugin, () -> inv.open((Player) e.getPlayer()));
+                    Task.sync(() -> inv.open((Player) e.getPlayer()));
                 }
             }
         }

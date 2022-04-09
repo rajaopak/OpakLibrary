@@ -1,5 +1,6 @@
 package id.universemc.universelibs.universelibs.inventory;
 
+import id.universemc.universelibs.universelibs.UniverseLib;
 import id.universemc.universelibs.universelibs.libs.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,7 +12,10 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -301,14 +305,6 @@ public class SimpleInventory implements InventoryHolder {
         entity.closeInventory();
     }
 
-    public void update() {
-        for (int i = 0; i < this.inventory.getSize(); i++) {
-            if (this.inventory.getItem(i) != null) {
-                this.inventory.setItem(i, this.inventory.getItem(i));
-            }
-        }
-    }
-
     /**
      * Get borders of the inventory. If the inventory size is under 27, all slots are returned.
      *
@@ -335,7 +331,7 @@ public class SimpleInventory implements InventoryHolder {
      * @return The Bukkit inventory.
      */
     @Override
-    public Inventory getInventory() {
+    public @NotNull Inventory getInventory() {
         return this.inventory;
     }
 

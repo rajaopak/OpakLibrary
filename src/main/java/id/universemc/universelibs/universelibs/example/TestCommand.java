@@ -28,7 +28,6 @@ public class TestCommand extends BaseCommand {
                             iBuilder.setAmount(amount.incrementAndGet());
                             /*Common.sendMessage(event.getWhoClicked(), "&aClicked!");*/
                             inv.setItem(13, iBuilder.build());
-                            /*inv.updates();*/
                         }
 
                         if (event.getSlot() == 26)
@@ -36,8 +35,8 @@ public class TestCommand extends BaseCommand {
                     });
                     inv.addOpenHandler(event -> {
                         Task.asyncLater(100L, () -> {
-                            iBuilder.meta(itemMeta -> {itemMeta.setLore(Common.color(Arrays.asList("&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI")));});
-                            inv.update();
+                            iBuilder.setLore(Common.color(Arrays.asList("&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI", "&aGIGI")));
+                            inv.setItem(13, iBuilder.build());
                         });
                     });
                     inv.setItem(11,

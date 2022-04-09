@@ -209,6 +209,30 @@ public class ItemBuilder implements Cloneable {
         return setLore(lore);
     }
 
+    public ItemBuilder removeLore(String line) {
+        List<String> lore = this.meta.getLore();
+
+        if (lore == null) {
+            return this;
+        }
+
+        lore.remove(line);
+
+        return setLore(lore);
+    }
+
+    public ItemBuilder removeLore(int index) {
+        List<String> lore = this.meta.getLore();
+
+        if (lore == null) {
+            return this;
+        }
+
+        lore.remove(index);
+
+        return setLore(lore);
+    }
+
     public ItemBuilder setFlags(ItemFlag... flags) {
         this.meta.addItemFlags(flags);
         return this;

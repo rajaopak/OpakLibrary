@@ -1,5 +1,5 @@
 name: UniverseLibs
-version: '0.0.3'
+version: '0.0.4'
 main: id.universemc.universelibs.universelibs.UniverseLib
 api-version: 1.13
 authors: [ rajaopak ]

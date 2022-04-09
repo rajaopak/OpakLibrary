@@ -11,12 +11,12 @@ UniverseLibs.init(plugin);
 Using maven to download the library:
 #### Repository
 ```xml
-<repository>
+<repositories>
     <repository>
         <id>jitpack.io</id>
         <url>https://jitpack.io</url>
     </repository>
-</repository>
+</repositories>
 ```
 
 #### Dependencies
@@ -25,7 +25,7 @@ Using maven to download the library:
     <dependency>
         <groupId>com.github.UniverseNetwork</groupId>
         <artifactId>UniverseLibs</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
     </dependency>
 </dependencies>
 ```

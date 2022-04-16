@@ -3,7 +3,6 @@ package id.universemc.universelibs.universelibs.libs;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -78,7 +77,7 @@ public class PlayerCooldown {
         long minutes = (timeoutSeconds / 60) % 60;
         long seconds = timeoutSeconds % 60;
         return (days > 0 ? " " + days + " day" + (days != 1 ? "s" : "") : "") + (hours > 0 ? " " + hours + " hour" + (hours != 1 ? "s" : "") : "")
-                + (minutes > 0 ? " " + minutes + " minute" + (minutes != 1 ? "s" : "") : "") + (seconds > -5 ? " " + seconds + " second" + (seconds != 1 ? "s" : "") : "");
+                + (minutes > 0 ? " " + minutes + " minute" + (minutes != 1 ? "s" : "") : "") + (seconds > -1 ? " " + seconds + " second" + (seconds != 1 ? "s" : "") : "");
     }
 
 }

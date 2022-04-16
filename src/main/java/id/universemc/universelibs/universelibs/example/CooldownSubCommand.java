@@ -1,10 +1,8 @@
 package id.universemc.universelibs.universelibs.example;
 
-import id.universemc.universelibs.universelibs.UniverseLib;
 import id.universemc.universelibs.universelibs.UniverseLibs;
 import id.universemc.universelibs.universelibs.commands.SubCommand;
 import id.universemc.universelibs.universelibs.libs.Common;
-import id.universemc.universelibs.universelibs.libs.PlayerCooldown;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;

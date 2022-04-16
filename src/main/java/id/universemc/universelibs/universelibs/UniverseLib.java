@@ -5,7 +5,6 @@ import id.universemc.universelibs.universelibs.example.ConfigValue;
 import id.universemc.universelibs.universelibs.example.MainCommand;
 import id.universemc.universelibs.universelibs.example.TestCommand;
 import id.universemc.universelibs.universelibs.libs.Common;
-import id.universemc.universelibs.universelibs.libs.PlayerCooldown;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class UniverseLib extends JavaPlugin {

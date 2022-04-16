@@ -4,6 +4,7 @@ import de.themoep.minedown.MineDown;
 import id.universemc.universelibs.universelibs.UniverseLibs;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -91,6 +92,10 @@ public class Common {
             return;
         }
         sender.sendMessage(color(message));
+    }
+
+    public static BaseComponent textComponent(String text){
+        return new TextComponent(color(text));
     }
 
     public static List<String> color(List<String> messages) {

@@ -6,7 +6,7 @@
 
     <groupId>id.universemc.universelibs</groupId>
     <artifactId>UniverseLibs</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <packaging>jar</packaging>
 
     <name>UniverseLibs</name>
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
-            <version>8.7.0</version>
+            <version>8.7.1</version>
         </dependency>
         <dependency>
             <groupId>de.themoep</groupId>

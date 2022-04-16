@@ -33,7 +33,29 @@ public class PlayerCooldown {
         start(uuid);
     }
 
+    public void setCooldown(UUID uuid, long seconds, String permissionToBypass) {
+        if (Bukkit.getPlayer(uuid).hasPermission(permissionToBypass)) return;
+        if (!hasCooldown(uuid)) {
+            cooldowns.put(uuid, System.currentTimeMillis() + (seconds * 1000));
+            return;
+        }
+        start(uuid);
+    }
+
     public void setCooldownAction(UUID uuid, long seconds, Consumer<Player> consumer) {
+        if (!hasCooldown(uuid)) {
+            cooldowns.put(uuid, System.currentTimeMillis() + (seconds * 1000));
+            consumer.accept(Bukkit.getPlayer(uuid));
+            return;
+        }
+        start(uuid);
+    }
+
+    public void setCooldownAction(UUID uuid, long seconds, String permissionToBypass, Consumer<Player> consumer) {
+        if (Bukkit.getPlayer(uuid).hasPermission(permissionToBypass)) {
+            consumer.accept(Bukkit.getPlayer(uuid));
+            return;
+        }
         if (!hasCooldown(uuid)) {
             cooldowns.put(uuid, System.currentTimeMillis() + (seconds * 1000));
             consumer.accept(Bukkit.getPlayer(uuid));

@@ -30,15 +30,18 @@ public class PlayerCooldown {
             cooldowns.put(uuid, System.currentTimeMillis() + (seconds * 1000));
             return;
         }
+
         start(uuid);
     }
 
     public void setCooldown(UUID uuid, long seconds, String permissionToBypass) {
         if (Bukkit.getPlayer(uuid).hasPermission(permissionToBypass)) return;
+
         if (!hasCooldown(uuid)) {
             cooldowns.put(uuid, System.currentTimeMillis() + (seconds * 1000));
             return;
         }
+
         start(uuid);
     }
 
@@ -48,6 +51,7 @@ public class PlayerCooldown {
             consumer.accept(Bukkit.getPlayer(uuid));
             return;
         }
+
         start(uuid);
     }
 
@@ -56,11 +60,13 @@ public class PlayerCooldown {
             consumer.accept(Bukkit.getPlayer(uuid));
             return;
         }
+
         if (!hasCooldown(uuid)) {
             cooldowns.put(uuid, System.currentTimeMillis() + (seconds * 1000));
             consumer.accept(Bukkit.getPlayer(uuid));
             return;
         }
+
         start(uuid);
     }
 

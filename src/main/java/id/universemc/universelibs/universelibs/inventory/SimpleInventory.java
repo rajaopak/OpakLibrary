@@ -1,6 +1,7 @@
 package id.universemc.universelibs.universelibs.inventory;
 
 import id.universemc.universelibs.universelibs.UniverseLib;
+import id.universemc.universelibs.universelibs.libs.Common;
 import id.universemc.universelibs.universelibs.libs.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -56,7 +57,7 @@ public class SimpleInventory implements InventoryHolder {
      * @param title The title (name) of the inventory.
      */
     public SimpleInventory(int size, String title) {
-        this(size, InventoryType.CHEST, title);
+        this(size, InventoryType.CHEST, Common.color(title));
     }
 
     /**

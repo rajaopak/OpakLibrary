@@ -25,7 +25,7 @@ Using maven to download the library:
     <dependency>
         <groupId>com.github.UniverseNetwork</groupId>
         <artifactId>UniverseLibs</artifactId>
-        <version>0.0.8</version>
+        <version>0.0.9</version>
     </dependency>
 </dependencies>
 ```

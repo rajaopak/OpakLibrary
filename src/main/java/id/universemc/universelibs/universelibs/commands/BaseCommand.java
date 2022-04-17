@@ -21,12 +21,12 @@ import java.util.function.Consumer;
  */
 public class BaseCommand extends Command implements Listener {
 
-    private final Map<String, SubCommand> subCommandMap = new HashMap<>();
+    protected final Map<String, SubCommand> subCommandMap = new HashMap<>();
 
-    private final JavaPlugin plugin;
-    private final @NotNull String COMMAND_NAME;
-    private final @NotNull List<String> COMMAND_ALIASES;
-    private final @Nullable String COMMAND_PERMISSION;
+    protected final JavaPlugin plugin;
+    protected final @NotNull String COMMAND_NAME;
+    protected final @NotNull List<String> COMMAND_ALIASES;
+    protected final @Nullable String COMMAND_PERMISSION;
     protected final Consumer<CommandSender> onNoArgs;
     protected final Consumer<CommandSender> onNoPermission;
     protected final Consumer<CommandSender> onNoSubcommand;

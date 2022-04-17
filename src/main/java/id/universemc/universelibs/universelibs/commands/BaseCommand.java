@@ -34,7 +34,7 @@ public class BaseCommand extends Command implements Listener {
     public BaseCommand(JavaPlugin plugin, @NotNull String name, @NotNull List<String> aliases,
                        @Nullable String COMMAND_PERMISSION, Consumer<CommandSender> onNoArgs,
                        Consumer<CommandSender> onNoPermission, Consumer<CommandSender> onNoSubcommand,
-                       SubCommand... subCommands) {
+                       @Nullable SubCommand... subCommands) {
         super(name, "universe commands", "/" + name, aliases);
         this.plugin = plugin;
         this.COMMAND_NAME = name;
@@ -48,9 +48,13 @@ public class BaseCommand extends Command implements Listener {
         this.setName(COMMAND_NAME);
         this.setLabel(COMMAND_NAME);
 
-        for (SubCommand subCommand : subCommands) {
-            this.subCommandMap.put(subCommand.getName().toLowerCase(), subCommand);
-            this.setUsage("/" + COMMAND_NAME + " " + subCommand.getUsage());
+        if (subCommands != null) {
+            for (SubCommand subCommand : subCommands) {
+                this.subCommandMap.put(subCommand.getName().toLowerCase(), subCommand);
+                this.setUsage("/" + COMMAND_NAME + " " + subCommand.getUsage());
+            }
+        } else {
+            this.setUsage("/" + COMMAND_NAME);
         }
     }
 

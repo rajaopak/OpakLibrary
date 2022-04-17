@@ -27,9 +27,9 @@ public class BaseCommand extends Command implements Listener {
     private final @NotNull String COMMAND_NAME;
     private final @NotNull List<String> COMMAND_ALIASES;
     private final @Nullable String COMMAND_PERMISSION;
-    private final Consumer<CommandSender> onNoArgs;
-    private final Consumer<CommandSender> onNoPermission;
-    private final Consumer<CommandSender> onNoSubcommand;
+    protected final Consumer<CommandSender> onNoArgs;
+    protected final Consumer<CommandSender> onNoPermission;
+    protected final Consumer<CommandSender> onNoSubcommand;
 
     public BaseCommand(JavaPlugin plugin, @NotNull String name, @NotNull List<String> aliases,
                        @Nullable String COMMAND_PERMISSION, Consumer<CommandSender> onNoArgs,

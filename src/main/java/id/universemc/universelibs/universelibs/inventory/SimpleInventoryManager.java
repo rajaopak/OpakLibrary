@@ -96,7 +96,11 @@ public class SimpleInventoryManager {
                 SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
 
                 if (inv.handleClose(e)) {
-                    Task.sync(() -> inv.open((Player) e.getPlayer()));
+                    Task.sync(() -> inv.open(e.getPlayer()));
+                }
+
+                if (inv.isUnCloseable()) {
+                    Task.syncLater(1, () -> inv.open(e.getPlayer()));
                 }
             }
         }

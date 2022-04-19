@@ -20,6 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
@@ -41,6 +42,8 @@ public class SimpleInventory implements InventoryHolder {
     private final Inventory inventory;
 
     private Predicate<Player> closeFilter;
+
+    private final AtomicBoolean unCloseable = new AtomicBoolean(false);
 
     /**
      * Create a new FastInv with a custom size.
@@ -334,15 +337,11 @@ public class SimpleInventory implements InventoryHolder {
      * @param unCloseable If the inventory should be unCloseable
      */
     public void unCloseable(boolean unCloseable) {
-        this.addCloseHandler(event -> {
-            if (event.getInventory().getHolder() instanceof SimpleInventory) {
-                if (unCloseable) {
-                    Task.syncLater(1, () -> {
-                        this.open(event.getPlayer());
-                    });
-                }
-            }
-        });
+        this.unCloseable.set(unCloseable);
+    }
+
+    public boolean isUnCloseable() {
+        return this.unCloseable.get();
     }
 
     /**

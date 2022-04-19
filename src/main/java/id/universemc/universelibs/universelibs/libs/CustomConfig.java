@@ -4,6 +4,7 @@ import id.universemc.universelibs.universelibs.UniverseLibs;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class CustomConfig {
     private FileConfiguration config;
 
     public CustomConfig(String configName, String directory) {
-        Plugin plugin = UniverseLibs.INSTANCE;
+        Plugin plugin = UniverseLibs.getInstance();
 
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdirs();

@@ -3,6 +3,7 @@ package id.universemc.universelibs.universelibs.inventory;
 import id.universemc.universelibs.universelibs.UniverseLib;
 import id.universemc.universelibs.universelibs.libs.Common;
 import id.universemc.universelibs.universelibs.libs.ItemBuilder;
+import id.universemc.universelibs.universelibs.libs.Task;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -324,6 +325,24 @@ public class SimpleInventory implements InventoryHolder {
     public int[] getCorners() {
         int size = this.inventory.getSize();
         return IntStream.range(0, size).filter(i -> i < 2 || (i > 6 && i < 10) || i == 17 || i == size - 18 || (i > size - 11 && i < size - 7) || i > size - 3).toArray();
+    }
+
+    /**
+     *
+     * Set the inventory to unClosable.
+     *
+     * @param unCloseable If the inventory should be unCloseable
+     */
+    public void unCloseable(boolean unCloseable) {
+        this.addCloseHandler(event -> {
+            if (event.getInventory().getHolder() instanceof SimpleInventory) {
+                if (unCloseable) {
+                    Task.syncLater(1, () -> {
+                        this.open(event.getPlayer());
+                    });
+                }
+            }
+        });
     }
 
     /**

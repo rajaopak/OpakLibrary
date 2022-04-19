@@ -1,9 +1,7 @@
 package id.universemc.universelibs.universelibs.libs;
 
-import id.universemc.universelibs.universelibs.UniverseLibs;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -14,8 +12,7 @@ public class CustomConfig {
     private final File file;
     private FileConfiguration config;
 
-    public CustomConfig(String configName, String directory) {
-        Plugin plugin = UniverseLibs.getInstance();
+    public CustomConfig(JavaPlugin plugin, String configName, String directory) {
 
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdirs();

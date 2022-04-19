@@ -15,7 +15,6 @@ public class UniverseLibs {
 
     private static PlayerCooldown cooldown;
     private static MarkCooldown cdMark;
-    private static CustomConfig config;
 
     public static void init(JavaPlugin plugin) {
         INSTANCE = plugin;

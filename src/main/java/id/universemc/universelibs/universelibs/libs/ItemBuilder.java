@@ -101,8 +101,10 @@ public class ItemBuilder implements Cloneable {
         }
     }
 
-    public ItemBuilder setData(int data) {
-        return setDurability((short) data);
+    public ItemBuilder setData(byte data) {
+        item = new ItemStack(item.getType(), item.getAmount(), item.getDurability(), data);
+        meta = meta.clone();
+        return this;
     }
 
     @Deprecated

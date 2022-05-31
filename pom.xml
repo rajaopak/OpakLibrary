@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>id.universemc.universelibs</groupId>
-    <artifactId>UniverseLibs</artifactId>
+    <groupId>dev.rajaopak</groupId>
+    <artifactId>OpakLibs</artifactId>
     <version>0.0.9</version>
     <packaging>jar</packaging>
 
-    <name>UniverseLibs</name>
+    <name>OpakLibs</name>
 
     <properties>
         <java.version>1.8</java.version>
@@ -32,7 +32,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
-                    <finalName>UniverseLibs-${project.version}</finalName>
+                    <finalName>OpakLibs-${project.version}</finalName>
                     <outputDirectory>C:\Users\Nafis\menkrep-anjay\server\bukkit\plugins</outputDirectory>
                 </configuration>
             </plugin>

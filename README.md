@@ -1,11 +1,11 @@
-# UniverseLibs
+# OpakLibs
 A Library for minecraft
 
 # How to use
 
 Initialize the library in your main class:
 ```java
-UniverseLibs.init(plugin);
+OpakLibs.init(plugin);
 ```
 
 Using maven to download the library:
@@ -23,9 +23,9 @@ Using maven to download the library:
 ```xml
 <dependencies>
     <dependency>
-        <groupId>com.github.UniverseNetwork</groupId>
-        <artifactId>UniverseLibs</artifactId>
-        <version>0.0.9</version>
+        <groupId>dev.rajaopak</groupId>
+        <artifactId>OpakLibs</artifactId>
+        <version><VERSION></version>
     </dependency>
 </dependencies>
 ```

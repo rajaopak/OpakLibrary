@@ -27,7 +27,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
@@ -35,11 +35,19 @@
                     <finalName>OpakLibs-${project.version}</finalName>
                     <outputDirectory>C:\Users\Nafis\menkrep-anjay\server\bukkit\plugins</outputDirectory>
                 </configuration>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>de.themoep.minedown</pattern>
+                            <shadedPattern>dev.rajaopak.minedown</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -96,7 +104,7 @@
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
-            <version>8.7.1</version>
+            <version>8.8.0</version>
         </dependency>
         <dependency>
             <groupId>de.themoep</groupId>

@@ -1,8 +1,8 @@
 package dev.rajaopak.OpakLibs.libs;
 
-import de.themoep.minedown.MineDown;
 import dev.rajaopak.OpakLibs.OpakLibs;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -103,7 +103,7 @@ public class Common {
     }
 
     public static String color(String message) {
-        return BaseComponent.toLegacyText(MineDown.parse(message));
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     public static List<String> tryParsePAPI(Player player, List<String> messages){

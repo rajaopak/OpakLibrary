@@ -18,6 +18,7 @@ public class MainCommand extends BaseCommand {
                 },
                 sender -> Common.sendMessage(sender, "&cYou don't have permission to use this command!"),
                 sender -> Common.sendMessage(sender, "&cPlease specify correct Subcommand!"),
+                null,
                 new MainSubCommand(), new ReloadSubCommand(), new CooldownSubCommand());
         this.register();
     }

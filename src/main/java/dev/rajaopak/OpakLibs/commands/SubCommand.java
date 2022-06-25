@@ -13,8 +13,11 @@ import java.util.List;
  */
 public abstract class SubCommand {
 
-    @NotNull
+    @Nullable
     public abstract String getName();
+
+    @Nullable
+    public abstract List<String> getNames();
 
     @Nullable
     public abstract String getUsage();

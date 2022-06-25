@@ -70,7 +70,7 @@ public class TestCommand extends BaseCommand {
                 },
                 sender -> Common.sendMessage(sender, "&cYou don't have permission to use this command!"),
                 sender -> Common.sendMessage(sender, "&cPlease specify correct Subcommand!", true),
-                new TestSubCommand());
+                null, new TestSubCommand());
         this.register();
     }
 

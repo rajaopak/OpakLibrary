@@ -17,6 +17,11 @@ public class TestSubCommand extends SubCommand {
     }
 
     @Override
+    public @Nullable List<String> getNames() {
+        return null;
+    }
+
+    @Override
     public @Nullable String getUsage() {
         return "Hello";
     }

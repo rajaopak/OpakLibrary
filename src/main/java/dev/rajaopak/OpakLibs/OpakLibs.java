@@ -22,7 +22,7 @@ public class OpakLibs {
         SimpleInventoryManager.register(plugin);
         new PlayerCooldown(plugin);
         PLACEHOLDER_API = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
-        Common.log("&aUniverseLibs Successfully Loaded!");
+        Common.log("&bOpakLibs &aSuccessfully Loaded!");
     }
 
     public static JavaPlugin getInstance() {

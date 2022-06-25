@@ -25,7 +25,7 @@ public final class OpakLib extends JavaPlugin {
         ConfigFile.init();
         ConfigValue.init(this.getConfig());
         Common.setPrefix(ConfigValue.PREFIX);
-        /*new SpigotCommand(this, "test", Arrays.asList("test123", "t"), "perm.test",
+        /*new BaseCommand(this, "test", Arrays.asList("test123", "t"), "perm.test",
                 sender -> sender.sendMessage("No Arguments"),
                 sender -> sender.sendMessage("No Permission"),
                 sender -> sender.sendMessage("No SubCommand"),

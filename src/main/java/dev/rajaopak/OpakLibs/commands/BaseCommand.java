@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.function.Consumer;
+import java.util.function.*;
 
 /**
  * modified by rajaopak
@@ -27,15 +27,19 @@ public class BaseCommand extends Command implements Listener {
     protected final @NotNull String COMMAND_NAME;
     protected final @NotNull List<String> COMMAND_ALIASES;
     protected final @Nullable String COMMAND_PERMISSION;
+    protected final @Nullable BiConsumer<CommandSender, String[]> execute;
     protected final Consumer<CommandSender> onNoArgs;
     protected final Consumer<CommandSender> onNoPermission;
     protected final Consumer<CommandSender> onNoSubcommand;
 
-    public BaseCommand(JavaPlugin plugin, @NotNull String name, @NotNull List<String> aliases,
-                       @Nullable String COMMAND_PERMISSION, Consumer<CommandSender> onNoArgs,
+    private final HashMap<String, Map.Entry<Integer, @Nullable String>> tabComplete;
+
+    public BaseCommand(JavaPlugin plugin, @NotNull String name, @NotNull List<String> aliases, @Nullable String COMMAND_PERMISSION,
+                       Consumer<CommandSender> onNoArgs,
                        Consumer<CommandSender> onNoPermission, Consumer<CommandSender> onNoSubcommand,
+                       @Nullable BiConsumer<CommandSender, String[]> execute,
                        @Nullable SubCommand... subCommands) {
-        super(name, "universe commands", "/" + name, aliases);
+        super(name, "opak commands", "/" + name, aliases);
         this.plugin = plugin;
         this.COMMAND_NAME = name;
         this.COMMAND_ALIASES = aliases;
@@ -43,10 +47,13 @@ public class BaseCommand extends Command implements Listener {
         this.onNoArgs = onNoArgs;
         this.onNoPermission = onNoPermission;
         this.onNoSubcommand = onNoSubcommand;
+        this.execute = execute;
         this.setPermission(COMMAND_PERMISSION);
         this.setAliases(COMMAND_ALIASES);
         this.setName(COMMAND_NAME);
         this.setLabel(COMMAND_NAME);
+
+        this.tabComplete = new HashMap<>();
 
         if (subCommands != null) {
             for (SubCommand subCommand : subCommands) {
@@ -98,6 +105,10 @@ public class BaseCommand extends Command implements Listener {
             return true;
         }
 
+        if (execute != null) {
+            execute.accept(sender, args);
+        }
+
         subCommand.execute(plugin, sender, args);
         return true;
     }
@@ -128,6 +139,23 @@ public class BaseCommand extends Command implements Listener {
                 return Objects.requireNonNull(subCommand.parseTabCompletions(plugin, sender, args));
             }
         }
+
+        Set<String> a = tabComplete.keySet();
+
+        for (String b : a) {
+            Map.Entry<Integer, String> c = tabComplete.get(b);
+
+            if (args.length == c.getKey()) {
+                if (c.getValue() != null) {
+                    if (sender.hasPermission(c.getValue())) {
+                        return Collections.singletonList(tabComplete.get(b).getValue());
+                    }
+                } else {
+                    return Collections.singletonList(tabComplete.get(b).getValue());
+                }
+            }
+        }
+
         return new ArrayList<>();
     }
 
@@ -143,7 +171,11 @@ public class BaseCommand extends Command implements Listener {
                 event.getCommands().add(COMMAND_NAME);
             }
         }
-
     }
+
+    public void addTabComplete(String cmd, int args, @Nullable String permission) {
+        tabComplete.put(cmd, new AbstractMap.SimpleEntry<>(args, permission));
+    }
+
 
 }

@@ -22,6 +22,7 @@ import java.util.function.*;
 public class BaseCommand extends Command implements Listener {
 
     protected final Map<String, SubCommand> subCommandMap = new HashMap<>();
+    protected final HashMap<String, Map.Entry<Integer, @Nullable String>> tabComplete;
 
     protected final JavaPlugin plugin;
     protected final @NotNull String COMMAND_NAME;
@@ -32,7 +33,6 @@ public class BaseCommand extends Command implements Listener {
     protected final Consumer<CommandSender> onNoPermission;
     protected final Consumer<CommandSender> onNoSubcommand;
 
-    private final HashMap<String, Map.Entry<Integer, @Nullable String>> tabComplete;
 
     public BaseCommand(JavaPlugin plugin, @NotNull String name, @NotNull List<String> aliases, @Nullable String COMMAND_PERMISSION,
                        Consumer<CommandSender> onNoArgs,

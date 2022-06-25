@@ -94,7 +94,11 @@ public class Common {
         sender.sendMessage(color(message));
     }
 
-    public static BaseComponent textComponent(String text){
+    public static BaseComponent baseComponent(String text){
+        return new TextComponent(color(text));
+    }
+
+    public static TextComponent textComponent(String text) {
         return new TextComponent(color(text));
     }
 

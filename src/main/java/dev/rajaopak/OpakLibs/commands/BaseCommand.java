@@ -87,15 +87,16 @@ public class BaseCommand extends Command implements Listener {
             return true;
         }
 
+        if (args.length == 0) {
+            onNoArgs.accept(sender);
+            return true;
+        }
+
         if (execute != null) {
             execute.accept(sender, args);
             return true;
         }
 
-        if (args.length == 0) {
-            onNoArgs.accept(sender);
-            return true;
-        }
 
         SubCommand subCommand = this.subCommandMap.get(args[0].toLowerCase());
         if (subCommand == null) {
@@ -116,6 +117,22 @@ public class BaseCommand extends Command implements Listener {
     @NotNull
     @Override
     public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
+        Set<String> a = tabComplete.keySet();
+
+        for (String b : a) {
+            Map.Entry<Integer, String> c = tabComplete.get(b);
+
+            if (args.length == c.getKey()) {
+                if (c.getValue() != null) {
+                    if (sender.hasPermission(c.getValue())) {
+                        return Collections.singletonList(b);
+                    }
+                } else {
+                    return Collections.singletonList(b);
+                }
+            }
+        }
+
         if (args.length == 1) {
             List<String> suggestions = new ArrayList<>();
             for (SubCommand subCommand : subCommandMap.values()) {
@@ -137,22 +154,6 @@ public class BaseCommand extends Command implements Listener {
             if (subCommand.getPermission() == null ||
                     sender.hasPermission(subCommand.getPermission())) {
                 return Objects.requireNonNull(subCommand.parseTabCompletions(plugin, sender, args));
-            }
-        }
-
-        Set<String> a = tabComplete.keySet();
-
-        for (String b : a) {
-            Map.Entry<Integer, String> c = tabComplete.get(b);
-
-            if (args.length == c.getKey()) {
-                if (c.getValue() != null) {
-                    if (sender.hasPermission(c.getValue())) {
-                        return Collections.singletonList(b);
-                    }
-                } else {
-                    return Collections.singletonList(b);
-                }
             }
         }
 

@@ -88,6 +88,11 @@ public class BaseCommand extends Command implements Listener {
             onNoPermission.accept(sender);
             return true;
         }
+
+        if (execute != null) {
+            execute.accept(sender, args);
+        }
+
         if (args.length == 0) {
             onNoArgs.accept(sender);
             return true;
@@ -103,10 +108,6 @@ public class BaseCommand extends Command implements Listener {
                 !sender.hasPermission(subCommand.getPermission())) {
             onNoPermission.accept(sender);
             return true;
-        }
-
-        if (execute != null) {
-            execute.accept(sender, args);
         }
 
         subCommand.execute(plugin, sender, args);
@@ -148,10 +149,10 @@ public class BaseCommand extends Command implements Listener {
             if (args.length == c.getKey()) {
                 if (c.getValue() != null) {
                     if (sender.hasPermission(c.getValue())) {
-                        return Collections.singletonList(tabComplete.get(b).getValue());
+                        return Collections.singletonList(b);
                     }
                 } else {
-                    return Collections.singletonList(tabComplete.get(b).getValue());
+                    return Collections.singletonList(b);
                 }
             }
         }

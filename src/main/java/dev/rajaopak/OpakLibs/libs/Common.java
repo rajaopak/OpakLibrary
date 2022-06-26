@@ -4,10 +4,13 @@ import dev.rajaopak.OpakLibs.OpakLibs;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.NumberFormat;
 import java.util.List;
@@ -59,6 +62,15 @@ public class Common {
     }
 
     /**
+     * @param sender    The sender of the Command
+     * @param component The component to send
+     *                  This method will send the TextComponent to the sender
+     */
+    public static void sendMessage(CommandSender sender, TextComponent component) {
+        sender.spigot().sendMessage(component);
+    }
+
+    /**
      * @param sender  The sender of the command
      * @param message The message to send
      *                This method will send the message to the sender.
@@ -100,6 +112,20 @@ public class Common {
 
     public static TextComponent textComponent(String text) {
         return new TextComponent(color(text));
+    }
+
+    public static TextComponent textComponent(String text, @Nullable ClickEvent clickEvent, @Nullable HoverEvent hoverEvent) {
+        TextComponent component = textComponent(text);
+
+        if (clickEvent != null) {
+            component.setClickEvent(clickEvent);
+        }
+
+        if (hoverEvent != null) {
+            component.setHoverEvent(hoverEvent);
+        }
+
+        return component;
     }
 
     public static List<String> color(List<String> messages) {

@@ -22,7 +22,7 @@ import java.util.function.*;
 public class BaseCommand extends Command implements Listener {
 
     protected final Map<String, SubCommand> subCommandMap = new HashMap<>();
-    protected final HashMap<String, Map.Entry<Integer, @Nullable String>> tabComplete;
+    protected final HashMap<String, Map.Entry<Integer, @Nullable String>> tabComplete = new HashMap<>();
 
     protected final JavaPlugin plugin;
     protected final @NotNull String COMMAND_NAME;
@@ -52,8 +52,6 @@ public class BaseCommand extends Command implements Listener {
         this.setAliases(COMMAND_ALIASES);
         this.setName(COMMAND_NAME);
         this.setLabel(COMMAND_NAME);
-
-        this.tabComplete = new HashMap<>();
 
         if (subCommands != null) {
             for (SubCommand subCommand : subCommands) {
@@ -91,6 +89,7 @@ public class BaseCommand extends Command implements Listener {
 
         if (execute != null) {
             execute.accept(sender, args);
+            return true;
         }
 
         if (args.length == 0) {

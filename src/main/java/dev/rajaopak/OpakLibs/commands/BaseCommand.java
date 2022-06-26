@@ -22,7 +22,7 @@ import java.util.function.*;
 public class BaseCommand extends Command implements Listener {
 
     protected final Map<String, SubCommand> subCommandMap = new HashMap<>();
-    protected final HashMap<Integer, Map.Entry<List<String>, @Nullable String>> tabComplete = new HashMap<>();
+    protected final Map<Integer, Map.Entry<List<String>, @Nullable String>> tabComplete = new HashMap<>();
 
     protected final JavaPlugin plugin;
     protected final @NotNull String COMMAND_NAME;
@@ -123,13 +123,15 @@ public class BaseCommand extends Command implements Listener {
             Map.Entry<List<String>, String> c = tabComplete.get(b);
 
             if (args.length == b) {
-                if (c.getValue() != null) {
+                return c.getKey();
+                /*if (c.getValue() != null) {
                     if (sender.hasPermission(c.getValue())) {
                         return c.getKey();
                     }
+                    return Collections.emptyList();
                 } else {
                     return c.getKey();
-                }
+                }*/
             }
         }
 

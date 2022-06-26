@@ -22,7 +22,7 @@ import java.util.function.*;
 public class BaseCommand extends Command implements Listener {
 
     protected final Map<String, SubCommand> subCommandMap = new HashMap<>();
-    protected final HashMap<String, Map.Entry<Integer, @Nullable String>> tabComplete = new HashMap<>();
+    protected final HashMap<Integer, Map.Entry<List<String>, @Nullable String>> tabComplete = new HashMap<>();
 
     protected final JavaPlugin plugin;
     protected final @NotNull String COMMAND_NAME;
@@ -117,18 +117,18 @@ public class BaseCommand extends Command implements Listener {
     @NotNull
     @Override
     public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String label, @NotNull String[] args) {
-        Set<String> a = tabComplete.keySet();
+        Set<Integer> a = tabComplete.keySet();
 
-        for (String b : a) {
-            Map.Entry<Integer, String> c = tabComplete.get(b);
+        for (Integer b : a) {
+            Map.Entry<List<String>, String> c = tabComplete.get(b);
 
-            if (args.length == c.getKey()) {
+            if (args.length == b) {
                 if (c.getValue() != null) {
                     if (sender.hasPermission(c.getValue())) {
-                        return Collections.singletonList(b);
+                        return c.getKey();
                     }
                 } else {
-                    return Collections.singletonList(b);
+                    return c.getKey();
                 }
             }
         }
@@ -174,8 +174,8 @@ public class BaseCommand extends Command implements Listener {
         }
     }
 
-    public void addTabComplete(String cmd, int args, @Nullable String permission) {
-        tabComplete.put(cmd, new AbstractMap.SimpleEntry<>(args, permission));
+    public void addTabComplete(int args, List<String> list, @Nullable String permission) {
+        tabComplete.put(args, new AbstractMap.SimpleEntry<>(list, permission));
     }
 
 

@@ -123,7 +123,15 @@ public class BaseCommand extends Command implements Listener {
             Map.Entry<List<String>, String> c = tabComplete.get(b);
 
             if (args.length == b) {
-                return c.getKey();
+                if (c.getValue() == null) {
+                    return c.getKey();
+                }
+
+                if (sender.hasPermission(c.getValue())) {
+                    return c.getKey();
+                }
+
+                return Collections.emptyList();
                 /*if (c.getValue() != null) {
                     if (sender.hasPermission(c.getValue())) {
                         return c.getKey();

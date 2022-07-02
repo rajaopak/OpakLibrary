@@ -152,7 +152,7 @@ public class Common {
 
     public static void log(String... messages) {
         for (String message : messages) {
-            OpakLibs.INSTANCE.getLogger().info(color(getPrefix() + "&r" + message));
+            OpakLibs.INSTANCE.getLogger().info(color(message));
         }
     }
 
@@ -179,13 +179,15 @@ public class Common {
                 Bukkit.getVersion().contains("1.15") ||
                 Bukkit.getVersion().contains("1.16") ||
                 Bukkit.getVersion().contains("1.17") ||
-                Bukkit.getVersion().contains("1.18");
+                Bukkit.getVersion().contains("1.18") ||
+                Bukkit.getVersion().contains("1.19");
     }
 
     public static boolean supportHexColor() {
         return Bukkit.getVersion().contains("1.16") ||
                 Bukkit.getVersion().contains("1.17") ||
-                Bukkit.getVersion().contains("1.18");
+                Bukkit.getVersion().contains("1.18") ||
+                Bukkit.getVersion().contains("1.19");
     }
 
     public static boolean hasOffhand() {

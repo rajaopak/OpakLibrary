@@ -97,7 +97,6 @@ public class BaseCommand extends Command implements Listener {
             return true;
         }
 
-
         SubCommand subCommand = this.subCommandMap.get(args[0].toLowerCase());
         if (subCommand == null) {
             onNoSubcommand.accept(sender);
@@ -132,14 +131,6 @@ public class BaseCommand extends Command implements Listener {
                 }
 
                 return Collections.emptyList();
-                /*if (c.getValue() != null) {
-                    if (sender.hasPermission(c.getValue())) {
-                        return c.getKey();
-                    }
-                    return Collections.emptyList();
-                } else {
-                    return c.getKey();
-                }*/
             }
         }
 

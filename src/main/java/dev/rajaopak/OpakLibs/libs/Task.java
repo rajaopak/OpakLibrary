@@ -6,12 +6,12 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class Task {
 
-    public static BukkitTask sync(Runnable runnable) {
-        return Bukkit.getScheduler().runTask(OpakLibs.INSTANCE, runnable);
+    public static void sync(Runnable runnable) {
+        Bukkit.getScheduler().runTask(OpakLibs.INSTANCE, runnable);
     }
 
-    public static BukkitTask syncLater(long delay, Runnable runnable) {
-        return Bukkit.getScheduler().runTaskLater(OpakLibs.INSTANCE, runnable, delay);
+    public static void syncLater(long delay, Runnable runnable) {
+        Bukkit.getScheduler().runTaskLater(OpakLibs.INSTANCE, runnable, delay);
     }
 
     public static BukkitTask syncTimer(long delay, long runEvery, Runnable runnable) {
@@ -22,12 +22,12 @@ public class Task {
         return Bukkit.getScheduler().runTaskAsynchronously(OpakLibs.INSTANCE, runnable);
     }
 
-    public static BukkitTask asyncLater(long delay, Runnable runnable) {
-        return Bukkit.getScheduler().runTaskLaterAsynchronously(OpakLibs.INSTANCE, runnable, delay);
+    public static void asyncLater(long delay, Runnable runnable) {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(OpakLibs.INSTANCE, runnable, delay);
     }
 
-    public static BukkitTask asyncTimer(long delay, long runEvery, Runnable runnable) {
-        return Bukkit.getScheduler().runTaskTimerAsynchronously(OpakLibs.INSTANCE, runnable, delay, runEvery);
+    public static void asyncTimer(long delay, long runEvery, Runnable runnable) {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(OpakLibs.INSTANCE, runnable, delay, runEvery);
     }
 
 }

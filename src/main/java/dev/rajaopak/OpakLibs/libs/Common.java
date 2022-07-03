@@ -25,6 +25,12 @@ public class Common {
     public static String PREFIX = "[OpakLibs]";
     public static boolean USE_PREFIX = true;
 
+    private static String nmsVersion;
+
+    static {
+        nmsVersion = Bukkit.getServer().getClass().getName().split("\\.")[3];
+    }
+
     public static void setPrefix(String prefix) {
         PREFIX = prefix;
     }
@@ -202,4 +208,7 @@ public class Common {
         return numberFormat.format(d);
     }
 
+    public static String getNmsVersion() {
+        return nmsVersion;
+    }
 }

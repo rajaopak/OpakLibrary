@@ -64,10 +64,20 @@ public class BaseCommand extends Command implements Listener {
     }
 
     public void register() {
-        if (!Bukkit.getServer().getVersion().contains("1.8") || !Bukkit.getServer().getVersion().contains("1.9") ||
-                !Bukkit.getServer().getVersion().contains("1.10") || !Bukkit.getServer().getVersion().contains("1.11") ||
-                !Bukkit.getServer().getVersion().contains("1.12")) {
-            Bukkit.getPluginManager().registerEvents(this, plugin);
+        String version = Common.getNmsVersion();
+        switch (version) {
+            case "v1_8_R3":
+            case "v1_9_R1":
+            case "v1_9_R2":
+            case "v1_10_R1":
+            case "v1_11_R1":
+            case "v1_12_R2": {
+                break;
+            }
+            default: {
+                Bukkit.getPluginManager().registerEvents(this, plugin);
+                break;
+            }
         }
         try {
             Field commandMapField = Bukkit.getServer().getClass().getDeclaredField("commandMap");

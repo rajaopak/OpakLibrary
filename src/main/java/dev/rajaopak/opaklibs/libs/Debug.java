@@ -1,6 +1,6 @@
-package dev.rajaopak.OpakLibs.libs;
+package dev.rajaopak.opaklibs.libs;
 
-import dev.rajaopak.OpakLibs.OpakLibs;
+import dev.rajaopak.opaklibs.OpakLibs;
 
 public class Debug {
 

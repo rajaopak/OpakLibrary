@@ -1,6 +1,6 @@
-package dev.rajaopak.OpakLibs.commands;
+package dev.rajaopak.opaklibs.commands;
 
-import dev.rajaopak.OpakLibs.libs.Common;
+import dev.rajaopak.opaklibs.libs.Common;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;

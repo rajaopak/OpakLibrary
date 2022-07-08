@@ -1,30 +1,28 @@
-package dev.rajaopak.OpakLibs.example;
+package dev.rajaopak.opaklibs.example;
 
-import dev.rajaopak.OpakLibs.libs.Common;
-import dev.rajaopak.OpakLibs.OpakLibs;
-import dev.rajaopak.OpakLibs.commands.SubCommand;
+import dev.rajaopak.opaklibs.libs.Common;
+import dev.rajaopak.opaklibs.commands.SubCommand;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CooldownSubCommand extends SubCommand {
+public class ReloadSubCommand extends SubCommand {
     @Override
     public @NotNull String getName() {
-        return "testcooldown";
+        return "reload";
     }
 
     @Override
     public @Nullable String getUsage() {
-        return "testcooldown";
+        return "reload";
     }
 
     @Override
     public @Nullable String getPermission() {
-        return null;
+        return "opaklibs.reload";
     }
 
     @Override
@@ -34,11 +32,7 @@ public class CooldownSubCommand extends SubCommand {
 
     @Override
     public void execute(JavaPlugin plugin, CommandSender sender, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            OpakLibs.getCooldown().setCooldownAction(player.getUniqueId(), 5, p -> {
-                Common.sendMessage(p, "&aHello!");
-            });
-        }
+        ConfigFile.reloadAll();
+        Common.sendMessage(sender, "&aAll File has been reloaded!", true);
     }
 }

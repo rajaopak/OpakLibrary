@@ -1,4 +1,4 @@
-package dev.rajaopak.OpakLibs.example;
+package dev.rajaopak.opaklibs.example;
 
 import org.bukkit.configuration.file.FileConfiguration;
 

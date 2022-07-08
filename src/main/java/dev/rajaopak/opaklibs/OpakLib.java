@@ -1,10 +1,10 @@
-package dev.rajaopak.OpakLibs;
+package dev.rajaopak.opaklibs;
 
-import dev.rajaopak.OpakLibs.example.ConfigFile;
-import dev.rajaopak.OpakLibs.example.ConfigValue;
-import dev.rajaopak.OpakLibs.example.MainCommand;
-import dev.rajaopak.OpakLibs.example.TestCommand;
-import dev.rajaopak.OpakLibs.libs.Common;
+import dev.rajaopak.opaklibs.example.ConfigFile;
+import dev.rajaopak.opaklibs.example.ConfigValue;
+import dev.rajaopak.opaklibs.example.MainCommand;
+import dev.rajaopak.opaklibs.example.TestCommand;
+import dev.rajaopak.opaklibs.libs.Common;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class OpakLib extends JavaPlugin {
@@ -15,9 +15,12 @@ public final class OpakLib extends JavaPlugin {
         return INSTANCE;
     }
 
+    public long uptime;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
+        uptime = System.currentTimeMillis();
         INSTANCE = this;
         OpakLibs.init(this);
         new MainCommand(this);
@@ -35,5 +38,9 @@ public final class OpakLib extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public long getUpTime() {
+        return (System.currentTimeMillis() - uptime) / 1000;
     }
 }

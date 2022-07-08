@@ -1,11 +1,11 @@
-package dev.rajaopak.OpakLibs.example;
+package dev.rajaopak.opaklibs.example;
 
-import dev.rajaopak.OpakLibs.commands.BaseCommand;
-import dev.rajaopak.OpakLibs.inventory.SimpleInventory;
-import dev.rajaopak.OpakLibs.libs.Common;
-import dev.rajaopak.OpakLibs.OpakLib;
-import dev.rajaopak.OpakLibs.libs.ItemBuilder;
-import dev.rajaopak.OpakLibs.libs.Task;
+import dev.rajaopak.opaklibs.commands.BaseCommand;
+import dev.rajaopak.opaklibs.inventory.SimpleInventory;
+import dev.rajaopak.opaklibs.libs.Common;
+import dev.rajaopak.opaklibs.OpakLib;
+import dev.rajaopak.opaklibs.libs.ItemBuilder;
+import dev.rajaopak.opaklibs.libs.Task;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TestCommand extends BaseCommand {
 
     public TestCommand() {
-        super(OpakLib.getInstance(), "unltestcmd", Arrays.asList("unltc", "unltcmd"), "universelibs.testcmd2",
+        super(OpakLib.getInstance(), "opltestcmd", Arrays.asList("opltc", "opltcmd"), "opaklibs.testcmd2",
                 sender -> {
                     SimpleInventory inv = new SimpleInventory(27, "Test GUI");
                     ItemBuilder iBuilder = new ItemBuilder(Material.GREEN_WOOL);

@@ -1,9 +1,9 @@
-package dev.rajaopak.OpakLibs;
+package dev.rajaopak.opaklibs;
 
-import dev.rajaopak.OpakLibs.inventory.SimpleInventoryManager;
-import dev.rajaopak.OpakLibs.libs.Common;
-import dev.rajaopak.OpakLibs.libs.MarkCooldown;
-import dev.rajaopak.OpakLibs.libs.PlayerCooldown;
+import dev.rajaopak.opaklibs.inventory.SimpleInventoryManager;
+import dev.rajaopak.opaklibs.libs.Common;
+import dev.rajaopak.opaklibs.libs.MarkCooldown;
+import dev.rajaopak.opaklibs.libs.PlayerCooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

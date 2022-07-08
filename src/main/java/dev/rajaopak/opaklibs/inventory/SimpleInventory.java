@@ -1,6 +1,6 @@
-package dev.rajaopak.OpakLibs.inventory;
+package dev.rajaopak.opaklibs.inventory;
 
-import dev.rajaopak.OpakLibs.libs.Common;
+import dev.rajaopak.opaklibs.libs.Common;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;

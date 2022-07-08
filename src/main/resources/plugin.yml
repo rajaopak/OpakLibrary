@@ -1,5 +1,5 @@
-name: UniverseLibs
+name: OpakLibs
 version: '${project.version}'
-main: id.universemc.universelibs.universelibs.UniverseLib
+main: dev.rajaopak.opaklibs.OpakLib
 api-version: 1.13
 authors: [ rajaopak ]

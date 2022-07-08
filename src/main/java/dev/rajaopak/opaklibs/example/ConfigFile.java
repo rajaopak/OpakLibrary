@@ -1,7 +1,7 @@
-package dev.rajaopak.OpakLibs.example;
+package dev.rajaopak.opaklibs.example;
 
-import dev.rajaopak.OpakLibs.libs.CustomConfig;
-import dev.rajaopak.OpakLibs.OpakLib;
+import dev.rajaopak.opaklibs.libs.CustomConfig;
+import dev.rajaopak.opaklibs.OpakLib;
 
 public class ConfigFile {
 

@@ -1,6 +1,6 @@
-package dev.rajaopak.OpakLibs.libs;
+package dev.rajaopak.opaklibs.libs;
 
-import dev.rajaopak.OpakLibs.OpakLibs;
+import dev.rajaopak.opaklibs.OpakLibs;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;

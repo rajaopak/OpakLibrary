@@ -1,4 +1,4 @@
-package dev.rajaopak.OpakLibs.libs;
+package dev.rajaopak.opaklibs.libs;
 
 import com.cryptomorin.xseries.SkullUtils;
 import org.bukkit.Color;

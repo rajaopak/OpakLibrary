@@ -1,44 +1,44 @@
-package dev.rajaopak.OpakLibs.example;
+package dev.rajaopak.opaklibs.example;
 
-import dev.rajaopak.OpakLibs.commands.SubCommand;
-import dev.rajaopak.OpakLibs.inventory.SimpleInventory;
-import org.bukkit.Material;
+import dev.rajaopak.opaklibs.libs.Common;
+import dev.rajaopak.opaklibs.OpakLibs;
+import dev.rajaopak.opaklibs.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
 import java.util.List;
 
-public class MainSubCommand extends SubCommand {
-
+public class CooldownSubCommand extends SubCommand {
     @Override
     public @NotNull String getName() {
-        return "gui";
+        return "testcooldown";
     }
 
     @Override
     public @Nullable String getUsage() {
-        return "gui";
+        return "testcooldown";
     }
 
     @Override
     public @Nullable String getPermission() {
-        return "universelibs.test.gui";
+        return null;
     }
 
     @Override
     public @Nullable List<String> parseTabCompletions(JavaPlugin plugin, CommandSender sender, String[] args) {
-        return Collections.emptyList();
+        return null;
     }
 
     @Override
     public void execute(JavaPlugin plugin, CommandSender sender, String[] args) {
-        SimpleInventory inv = new SimpleInventory(54, "Test Inventory");
-        inv.setItems(inv.getBorders(), new ItemStack(Material.GRAY_STAINED_GLASS_PANE));
-        inv.open((Player) sender);
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            OpakLibs.getCooldown().setCooldownAction(player.getUniqueId(), 5, p -> {
+                Common.sendMessage(p, "&aHello!");
+            });
+        }
     }
 }

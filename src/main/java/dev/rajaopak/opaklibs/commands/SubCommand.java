@@ -1,4 +1,4 @@
-package dev.rajaopak.OpakLibs.commands;
+package dev.rajaopak.opaklibs.commands;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;

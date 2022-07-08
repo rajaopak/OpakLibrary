@@ -27,15 +27,15 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
                     <finalName>OpakLibs-${project.version}</finalName>
-                    <outputDirectory>C:\Users\Nafis\menkrep-anjay\server\bukkit\plugins</outputDirectory>
+                    <outputDirectory>D:\server\bukkit\plugins</outputDirectory>
                 </configuration>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -102,6 +102,11 @@
             <groupId>com.intellij</groupId>
             <artifactId>annotations</artifactId>
             <version>12.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20220320</version>
         </dependency>
     </dependencies>
 </project>

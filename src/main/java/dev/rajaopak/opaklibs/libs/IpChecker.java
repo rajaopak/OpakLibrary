@@ -20,14 +20,10 @@ public class IpChecker {
         }
 
         if (!json.getString("status").equalsIgnoreCase("fail")) {
-            if (json.getString("continent") != null &&
-                    json.getString("country") != null &&
+            if (json.getString("country") != null &&
                     json.getString("city") != null) {
-                builder.append(json.get("continent")).append(", ")
-                        .append(json.get("country")).append(", ")
+                builder.append(json.get("country")).append(", ")
                         .append(json.get("city"));
-            } else if (json.getString("continent") != null){
-                builder.append(json.get("continent"));
             } else if (json.getString("country") != null) {
                 builder.append(json.get("country"));
             } else if (json.getString("city") != null) {

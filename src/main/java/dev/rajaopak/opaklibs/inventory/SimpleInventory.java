@@ -338,6 +338,14 @@ public class SimpleInventory implements InventoryHolder {
         return this.unCloseable.get();
     }
 
+    public void updateInventory() {
+        for (HumanEntity entity : this.inventory.getViewers()) {
+            if (entity instanceof Player) {
+                ((Player) entity).updateInventory();
+            }
+        }
+    }
+
     /**
      * Get the Bukkit inventory.
      *

@@ -2,7 +2,9 @@ package dev.rajaopak.opaklibs.example;
 
 import dev.rajaopak.opaklibs.OpakLib;
 import dev.rajaopak.opaklibs.commands.SubCommand;
+import dev.rajaopak.opaklibs.inventory.RefreshGui;
 import dev.rajaopak.opaklibs.inventory.SimpleInventory;
+import dev.rajaopak.opaklibs.libs.Common;
 import dev.rajaopak.opaklibs.libs.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -39,9 +41,15 @@ public class MainSubCommand extends SubCommand {
     @Override
     public void execute(JavaPlugin plugin, CommandSender sender, String[] args) {
         SimpleInventory inv = new SimpleInventory(54, "Test Inventory");
-        inv.setItems(inv.getBorders(), new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE)
-                .addLore("uptime: &e" + OpakLib.getInstance().getUpTime())
-                .build());
+        RefreshGui refreshGui = new RefreshGui(inv);
+        refreshGui.start(() -> {
+            inv.setItems(inv.getBorders(), new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE)
+                    .build());
+            inv.setItem(22, new ItemBuilder(Material.WRITTEN_BOOK)
+                    .setName("&eUptime")
+                    .setLore("&e" + Common.formatTime((int) OpakLib.getInstance().getUpTime()))
+                    .build());
+        }, 5);
         inv.open((Player) sender);
     }
 }

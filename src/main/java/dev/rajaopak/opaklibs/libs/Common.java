@@ -212,7 +212,7 @@ public class Common {
         return nmsVersion;
     }
 
-    public String formatTime(int seconds) {
+    public static String formatTime(int seconds) {
         if (seconds == 0) {
             return "0s";
         }

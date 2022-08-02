@@ -69,17 +69,20 @@ public class SimpleInventoryManager {
             if (e.getInventory().getHolder() instanceof SimpleInventory && e.getClickedInventory() != null) {
                 SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
 
-                if (!inv.isTakeAble()) {
-                    boolean wasCancelled = e.isCancelled();
-                    e.setCancelled(true);
-
-
-                    // This prevents un-canceling the event if another plugin canceled it before
-                    if (!wasCancelled && !e.isCancelled()) {
-                        e.setCancelled(false);
-                    }
+                if (!inv.unTakeAble()) {
+                    e.setCancelled(false);
+                    return;
                 }
+
+                boolean wasCancelled = e.isCancelled();
+                e.setCancelled(true);
+
                 inv.handleClick(e);
+
+                // This prevents un-canceling the event if another plugin canceled it before
+                if (!wasCancelled && !e.isCancelled()) {
+                    e.setCancelled(false);
+                }
             }
         }
 

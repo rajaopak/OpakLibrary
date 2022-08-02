@@ -340,11 +340,11 @@ public class SimpleInventory implements InventoryHolder {
         return this.unCloseable.get();
     }
 
-    public void takeAble(boolean takeAble) {
+    public void unTakeAble(boolean takeAble) {
         this.takeAble.set(takeAble);
     }
 
-    public boolean isTakeAble() {
+    public boolean unTakeAble() {
         return this.takeAble.get();
     }
 

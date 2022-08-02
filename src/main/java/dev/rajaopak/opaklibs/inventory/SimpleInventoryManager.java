@@ -69,7 +69,7 @@ public class SimpleInventoryManager {
             if (e.getInventory().getHolder() instanceof SimpleInventory && e.getClickedInventory() != null) {
                 SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
 
-                if (!inv.isUnTakeAble()) {
+                if (inv.isTakeAble()) {
                     e.setCancelled(false);
                     inv.handleClick(e);
                     return;

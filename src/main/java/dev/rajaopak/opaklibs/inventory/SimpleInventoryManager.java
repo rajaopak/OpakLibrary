@@ -70,6 +70,7 @@ public class SimpleInventoryManager {
                 SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
 
                 if (inv.isTakeAble()) {
+                    inv.handleClick(e);
                     return;
                 }
 

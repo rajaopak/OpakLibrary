@@ -1,5 +1,0 @@
-name: OpakLibs
-version: '${project.version}'
-main: dev.rajaopak.opaklibs.OpakLib
-api-version: 1.13
-authors: [ rajaopak ]

@@ -39,6 +39,8 @@ public class SimpleInventory implements InventoryHolder {
 
     private final AtomicBoolean unCloseable = new AtomicBoolean(false);
 
+    private final AtomicBoolean takeAble = new AtomicBoolean(false);
+
     /**
      * Create a new FastInv with a custom size.
      *
@@ -336,6 +338,14 @@ public class SimpleInventory implements InventoryHolder {
 
     public boolean isUnCloseable() {
         return this.unCloseable.get();
+    }
+
+    public void takeAble(boolean takeAble) {
+        this.takeAble.set(takeAble);
+    }
+
+    public boolean isTakeAble() {
+        return this.takeAble.get();
     }
 
     public void updateInventory() {

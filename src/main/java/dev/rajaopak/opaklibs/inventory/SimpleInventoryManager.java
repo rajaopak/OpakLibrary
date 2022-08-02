@@ -70,7 +70,7 @@ public class SimpleInventoryManager {
                 SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
 
                 if (inv.isTakeAble()) {
-                    e.setCancelled(false);
+                    return;
                 }
 
                 boolean wasCancelled = e.isCancelled();

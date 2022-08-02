@@ -71,8 +71,6 @@ public class SimpleInventoryManager {
 
                 if (inv.isTakeAble()) {
                     e.setCancelled(false);
-                    inv.handleClick(e);
-                    return;
                 }
 
                 boolean wasCancelled = e.isCancelled();

@@ -1,6 +1,8 @@
 package dev.rajaopak.opaklibs.libs;
 
 import com.cryptomorin.xseries.SkullUtils;
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -10,9 +12,11 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -82,7 +86,7 @@ public class ItemBuilder implements Cloneable {
 
     @NotNull
     @Override
-    public ItemBuilder clone(){
+    public ItemBuilder clone() {
         try {
             ItemBuilder clone = (ItemBuilder) super.clone();
 
@@ -257,7 +261,7 @@ public class ItemBuilder implements Cloneable {
         return meta(LeatherArmorMeta.class, m -> m.setColor(color));
     }
 
-    public ItemBuilder customModelData(int data){
+    public ItemBuilder customModelData(int data) {
         this.meta.setCustomModelData(data);
         return this;
     }
@@ -296,48 +300,70 @@ public class ItemBuilder implements Cloneable {
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, String s){
+    public ItemBuilder pdc(NamespacedKey key, String s) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, s);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Double d){
+    public ItemBuilder pdc(NamespacedKey key, Double d) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, d);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Float f){
+    public ItemBuilder pdc(NamespacedKey key, Float f) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.FLOAT, f);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Integer i){
+    public ItemBuilder pdc(NamespacedKey key, Integer i) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, i);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Long l){
+    public ItemBuilder pdc(NamespacedKey key, Long l) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.LONG, l);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Byte b){
+    public ItemBuilder pdc(NamespacedKey key, Byte b) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, b);
         return this;
     }
 
-    public ItemBuilder setSkull(String identifier){
+    public ItemBuilder setSkull(String identifier) {
         SkullUtils.applySkin(this.meta, identifier);
         return this;
     }
 
-    public ItemBuilder setSkull(OfflinePlayer identifier){
+    public ItemBuilder setSkull(OfflinePlayer identifier) {
         SkullUtils.applySkin(this.meta, identifier);
         return this;
     }
 
     public ItemBuilder setSkull(UUID identifier) {
         SkullUtils.applySkin(this.meta, identifier);
+        return this;
+    }
+
+    public ItemBuilder setSkullByTexture(String texture) {
+        if (texture.isEmpty()) return this;
+        if (this.item.getType() != Material.PLAYER_HEAD) return this;
+
+        SkullMeta headMeta = (SkullMeta) this.getMeta();
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+
+        profile.getProperties().put("textures", new Property("textures", texture));
+
+        try {
+            Field profileField = Objects.requireNonNull(headMeta).getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(headMeta, profile);
+
+        } catch (IllegalArgumentException | NoSuchFieldException | SecurityException | IllegalAccessException error) {
+            error.printStackTrace();
+        }
+
+        this.setMeta(headMeta);
         return this;
     }
 

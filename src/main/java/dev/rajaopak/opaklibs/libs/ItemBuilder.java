@@ -262,11 +262,13 @@ public class ItemBuilder implements Cloneable {
     }
 
     public ItemBuilder customModelData(int data) {
+        if (data == -1) return this;
+
         this.meta.setCustomModelData(data);
         return this;
     }
 
-    public int getCustomModeData() {
+    public int getCustomModelData() {
         if (this.meta.hasCustomModelData()) {
             return this.meta.getCustomModelData();
         }

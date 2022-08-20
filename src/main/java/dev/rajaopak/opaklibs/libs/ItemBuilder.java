@@ -346,7 +346,7 @@ public class ItemBuilder implements Cloneable {
     }
 
     public ItemBuilder setSkullByTexture(String texture) {
-        if (texture.isEmpty()) return this;
+        if (texture == null || texture.isEmpty()) return this;
         if (this.item.getType() != Material.PLAYER_HEAD) return this;
 
         SkullMeta headMeta = (SkullMeta) this.getMeta();

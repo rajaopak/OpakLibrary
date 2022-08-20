@@ -266,6 +266,14 @@ public class ItemBuilder implements Cloneable {
         return this;
     }
 
+    public int getCustomModeData() {
+        if (this.meta.hasCustomModelData()) {
+            return this.meta.getCustomModelData();
+        }
+
+        return -1;
+    }
+
     public ItemBuilder setUnbreakable(boolean unbreakable) {
         this.meta.setUnbreakable(unbreakable);
         return this;

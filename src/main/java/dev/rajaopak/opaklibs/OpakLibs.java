@@ -25,7 +25,7 @@ public class OpakLibs {
         new PlayerCooldown(plugin);
         SimpleInventoryManager.register(plugin);
 
-        Common.log("&bOpakLibs &aSuccessfully Loaded!");
+        Common.log("OpakLibs Successfully Loaded!");
     }
 
     public static JavaPlugin getInstance() {

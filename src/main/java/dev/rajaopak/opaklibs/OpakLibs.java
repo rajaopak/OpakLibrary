@@ -19,9 +19,12 @@ public class OpakLibs {
         INSTANCE = plugin;
         cooldown = new PlayerCooldown(plugin);
         cdMark = new MarkCooldown(plugin);
-        SimpleInventoryManager.register(plugin);
-        new PlayerCooldown(plugin);
         PLACEHOLDER_API = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
+
+        new MarkCooldown(plugin);
+        new PlayerCooldown(plugin);
+        SimpleInventoryManager.register(plugin);
+
         Common.log("&bOpakLibs &aSuccessfully Loaded!");
     }
 

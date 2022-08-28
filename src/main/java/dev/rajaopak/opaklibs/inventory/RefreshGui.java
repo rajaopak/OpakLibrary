@@ -15,7 +15,7 @@ public class RefreshGui extends BukkitRunnable {
 
     public void start(@NotNull Runnable runnable, int ticks) {
         this.runnable = runnable;
-        runTaskTimer(OpakLibs.getInstance(), 0, ticks);
+        runTaskTimerAsynchronously(OpakLibs.getInstance(), 0, ticks);
     }
 
     @Override

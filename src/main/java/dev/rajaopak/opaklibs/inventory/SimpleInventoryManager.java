@@ -22,7 +22,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class SimpleInventoryManager {
 
-
     private static final AtomicBoolean REGISTERED = new AtomicBoolean(false);
 
     private SimpleInventoryManager() {

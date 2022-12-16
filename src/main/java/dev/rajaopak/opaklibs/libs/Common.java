@@ -25,7 +25,7 @@ public class Common {
     public static String PREFIX = "[OpakLibs]";
     public static boolean USE_PREFIX = true;
 
-    private static String nmsVersion;
+    private static final String nmsVersion;
 
     static {
         nmsVersion = Bukkit.getServer().getClass().getName().split("\\.")[3];

@@ -5,7 +5,7 @@ A Library for minecraft
 
 Initialize the library in your main class:
 ```java
-OpakLibs.init(plugin);
+OpakLibrary.init(plugin);
 ```
 
 Using maven to download the library:
@@ -24,7 +24,7 @@ Using maven to download the library:
 <dependencies>
     <dependency>
         <groupId>dev.rajaopak</groupId>
-        <artifactId>OpakLibs</artifactId>
+        <artifactId>OpakLibrary</artifactId>
         <version><VERSION></version>
     </dependency>
 </dependencies>

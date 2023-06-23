@@ -76,5 +76,28 @@ public class ChatSession implements Listener {
         }
     }
 
-    public record Complete(Player player, String format, String message) {}
+    public static class Complete {
+
+        private final Player player;
+
+        private final String format;
+        private final String message;
+        public Complete(Player player, String format, String message) {
+            this.player = player;
+            this.format = format;
+            this.message = message;
+        }
+
+        public Player getPlayer() {
+            return player;
+        }
+
+        public String getFormat() {
+            return format;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
 }

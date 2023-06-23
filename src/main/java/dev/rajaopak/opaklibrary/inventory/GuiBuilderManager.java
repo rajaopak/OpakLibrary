@@ -1,30 +1,25 @@
-package dev.rajaopak.opaklibs.inventory;
+package dev.rajaopak.opaklibrary.inventory;
 
-import dev.rajaopak.opaklibs.libs.Common;
-import dev.rajaopak.opaklibs.libs.Task;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Manager for SimpleInventory listeners.
  *
- * @author MrMicky
+ * @author MrMicky, (edited by) rajaopak
  */
-public class SimpleInventoryManager {
+public class GuiBuilderManager {
 
     private static final AtomicBoolean REGISTERED = new AtomicBoolean(false);
 
-    private SimpleInventoryManager() {
+    private GuiBuilderManager() {
         throw new UnsupportedOperationException();
     }
 
@@ -36,14 +31,11 @@ public class SimpleInventoryManager {
      * @throws IllegalStateException if SimpleInventory is already registered
      */
     public static void register(Plugin plugin) {
-        Objects.requireNonNull(plugin, "plugin");
-
         if (REGISTERED.getAndSet(true)) {
-            throw new IllegalStateException("SimpleInventory is already registered");
+            throw new IllegalStateException("OpakInventory is already registered");
         }
 
         Bukkit.getPluginManager().registerEvents(new InventoryListener(plugin), plugin);
-        Common.log("SimpleInventory registered");
     }
 
     /**
@@ -51,7 +43,7 @@ public class SimpleInventoryManager {
      */
     public static void closeAll() {
         Bukkit.getOnlinePlayers().stream()
-                .filter(p -> p.getOpenInventory().getTopInventory().getHolder() instanceof SimpleInventory)
+                .filter(p -> p.getOpenInventory().getTopInventory().getHolder() instanceof GuiBuilder)
                 .forEach(Player::closeInventory);
     }
 
@@ -65,8 +57,8 @@ public class SimpleInventoryManager {
 
         @EventHandler
         public void onInventoryClick(InventoryClickEvent e) {
-            if (e.getInventory().getHolder() instanceof SimpleInventory && e.getClickedInventory() != null) {
-                SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
+            if (e.getInventory().getHolder() instanceof GuiBuilder && e.getClickedInventory() != null && e.getClickedInventory().getType() != InventoryType.PLAYER) {
+                GuiBuilder inv = (GuiBuilder) e.getInventory().getHolder();
 
                 if (inv.isTakeAble()) {
                     inv.handleClick(e);
@@ -86,9 +78,18 @@ public class SimpleInventoryManager {
         }
 
         @EventHandler
+        public void onInventoryDrag(InventoryDragEvent e) {
+            if (e.getInventory().getHolder() instanceof GuiBuilder) {
+                GuiBuilder inv = (GuiBuilder) e.getInventory().getHolder();
+
+                inv.handleDrag(e);
+            }
+        }
+
+        @EventHandler
         public void onInventoryOpen(InventoryOpenEvent e) {
-            if (e.getInventory().getHolder() instanceof SimpleInventory) {
-                SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
+            if (e.getInventory().getHolder() instanceof GuiBuilder) {
+                GuiBuilder inv = (GuiBuilder) e.getInventory().getHolder();
 
                 inv.handleOpen(e);
             }
@@ -96,15 +97,15 @@ public class SimpleInventoryManager {
 
         @EventHandler
         public void onInventoryClose(InventoryCloseEvent e) {
-            if (e.getInventory().getHolder() instanceof SimpleInventory) {
-                SimpleInventory inv = (SimpleInventory) e.getInventory().getHolder();
+            if (e.getInventory().getHolder() instanceof GuiBuilder) {
+                GuiBuilder inv = (GuiBuilder) e.getInventory().getHolder();
 
                 if (inv.handleClose(e)) {
-                    Task.sync(() -> inv.open(e.getPlayer()));
+                    Bukkit.getScheduler().runTask(this.plugin, () -> inv.open(e.getPlayer()));
                 }
 
                 if (inv.isUnCloseable()) {
-                    Task.syncLater(1, () -> inv.open(e.getPlayer()));
+                    Bukkit.getScheduler().runTaskLater(this.plugin, () -> inv.open(e.getPlayer()), 1);
                 }
             }
         }

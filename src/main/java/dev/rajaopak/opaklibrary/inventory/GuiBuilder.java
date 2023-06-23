@@ -1,13 +1,10 @@
-package dev.rajaopak.opaklibs.inventory;
+package dev.rajaopak.opaklibrary.inventory;
 
-import dev.rajaopak.opaklibs.libs.Common;
+import dev.rajaopak.opaklibrary.libs.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -20,33 +17,30 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 /**
- * Lightweight and easy-to-use inventory API for Bukkit plugins.
- * The project is on <a href="https://github.com/MrMicky-FR/FastInv">GitHub</a>.
+ * Lightweight and easy-to-use inventory API for Bukkit plugins. The project is on <a
+ * href="https://github.com/MrMicky-FR/FastInv">GitHub</a>.
  *
- * @author MrMicky
- * @version 3.0.3
+ * @author MrMicky, (edited by) rajaopak
  */
-public class SimpleInventory implements InventoryHolder {
+public class GuiBuilder implements InventoryHolder {
 
     private final Map<Integer, Consumer<InventoryClickEvent>> itemHandlers = new HashMap<>();
     private final List<Consumer<InventoryOpenEvent>> openHandlers = new ArrayList<>();
     private final List<Consumer<InventoryCloseEvent>> closeHandlers = new ArrayList<>();
     private final List<Consumer<InventoryClickEvent>> clickHandlers = new ArrayList<>();
+    private final List<Consumer<InventoryDragEvent>> dragHandlers = new ArrayList<>();
 
     private final Inventory inventory;
-
-    private Predicate<Player> closeFilter;
-
     private final AtomicBoolean unCloseable = new AtomicBoolean(false);
-
     private final AtomicBoolean unTakeAble = new AtomicBoolean(false);
+    private Predicate<Player> closeFilter;
 
     /**
      * Create a new FastInv with a custom size.
      *
      * @param size The size of the inventory.
      */
-    public SimpleInventory(int size) {
+    public GuiBuilder(int size) {
         this(size, InventoryType.CHEST.getDefaultTitle());
     }
 
@@ -56,8 +50,8 @@ public class SimpleInventory implements InventoryHolder {
      * @param size  The size of the inventory.
      * @param title The title (name) of the inventory.
      */
-    public SimpleInventory(int size, String title) {
-        this(size, InventoryType.CHEST, Common.color(title));
+    public GuiBuilder(int size, String title) {
+        this(size, InventoryType.CHEST, ChatUtil.color(title));
     }
 
     /**
@@ -65,7 +59,7 @@ public class SimpleInventory implements InventoryHolder {
      *
      * @param type The type of the inventory.
      */
-    public SimpleInventory(InventoryType type) {
+    public GuiBuilder(InventoryType type) {
         this(Objects.requireNonNull(type, "type"), type.getDefaultTitle());
     }
 
@@ -75,11 +69,11 @@ public class SimpleInventory implements InventoryHolder {
      * @param type  The type of the inventory.
      * @param title The title of the inventory.
      */
-    public SimpleInventory(InventoryType type, String title) {
+    public GuiBuilder(InventoryType type, String title) {
         this(0, Objects.requireNonNull(type, "type"), title);
     }
 
-    private SimpleInventory(int size, InventoryType type, String title) {
+    private GuiBuilder(int size, InventoryType type, String title) {
         if (type == InventoryType.CHEST && size > 0) {
             this.inventory = Bukkit.createInventory(this, size, title);
         } else {
@@ -87,14 +81,18 @@ public class SimpleInventory implements InventoryHolder {
         }
 
         if (this.inventory.getHolder() != this) {
-            throw new IllegalStateException("Inventory holder is not FastInv, found: " + this.inventory.getHolder());
+            throw new IllegalStateException(
+                    "Inventory holder is not GuiBuilder, found: " + this.inventory.getHolder());
         }
     }
 
-    protected void onOpen(InventoryOpenEvent event) {
+    protected void onClick(InventoryClickEvent event) {
     }
 
-    protected void onClick(InventoryClickEvent event) {
+    protected void onDrag(InventoryDragEvent event) {
+    }
+
+    protected void onOpen(InventoryOpenEvent event) {
     }
 
     protected void onClose(InventoryCloseEvent event) {
@@ -113,7 +111,7 @@ public class SimpleInventory implements InventoryHolder {
      * Add an {@link ItemStack} to the inventory on the first empty slot with a click handler.
      *
      * @param item    The item to add.
-     * @param handler The the click handler for the item.
+     * @param handler The click handler for the item.
      */
     public void addItem(ItemStack item, Consumer<InventoryClickEvent> handler) {
         int slot = this.inventory.firstEmpty();
@@ -168,7 +166,8 @@ public class SimpleInventory implements InventoryHolder {
      * @param item     The item to add.
      * @param handler  The click handler for the item
      */
-    public void setItems(int slotFrom, int slotTo, ItemStack item, Consumer<InventoryClickEvent> handler) {
+    public void setItems(
+            int slotFrom, int slotTo, ItemStack item, Consumer<InventoryClickEvent> handler) {
         for (int i = slotFrom; i <= slotTo; i++) {
             setItem(i, item, handler);
         }
@@ -204,13 +203,13 @@ public class SimpleInventory implements InventoryHolder {
      * @param item    The item to add.
      * @param handler The click handler for the item
      */
-    public void setItems(List<Integer> slots, ItemStack item, Consumer<InventoryClickEvent> handler){
-        for(int slot : slots){
+    public void setItems(List<Integer> slots, ItemStack item, Consumer<InventoryClickEvent> handler) {
+        for (int slot : slots) {
             setItem(slot, item, handler);
         }
     }
 
-    public void setFilterItem(ItemStack item){
+    public void setFilterItem(ItemStack item) {
         for (int i = 0; i < this.inventory.getSize(); i++) {
             if (this.inventory.getItem(i) == null) {
                 setItem(i, item);
@@ -221,11 +220,11 @@ public class SimpleInventory implements InventoryHolder {
     /**
      * Add an {@link ItemStack} to the inventory on multiples slots with a click handler.
      *
-     * @param slots   The slots where to add the item
-     * @param item    The item to add.
+     * @param slots The slots where to add the item
+     * @param item  The item to add.
      */
-    public void setItems(List<Integer> slots, ItemStack item){
-        for(int slot : slots){
+    public void setItems(List<Integer> slots, ItemStack item) {
+        for (int slot : slots) {
             setItem(slot, item);
         }
     }
@@ -252,8 +251,8 @@ public class SimpleInventory implements InventoryHolder {
     }
 
     /**
-     * Add a close filter to prevent players from closing the inventory.
-     * To prevent a player from closing the inventory the predicate should return {@code true}.
+     * Add a close filter to prevent players from closing the inventory. To prevent a player from
+     * closing the inventory the predicate should return {@code true}.
      *
      * @param closeFilter The close filter
      */
@@ -289,6 +288,15 @@ public class SimpleInventory implements InventoryHolder {
     }
 
     /**
+     * Add a handler to handle inventory drag.
+     *
+     * @param clickHandler The handler to add.
+     */
+    public void addDragHandler(Consumer<InventoryDragEvent> clickHandler) {
+        this.dragHandlers.add(clickHandler);
+    }
+
+    /**
      * Open the inventory to a player.
      *
      * @param entity The player to open the menu.
@@ -302,8 +310,24 @@ public class SimpleInventory implements InventoryHolder {
      *
      * @param entity player to check if he can open the inventory.
      */
-    public void close(HumanEntity entity){
+    public void close(HumanEntity entity) {
         entity.closeInventory();
+    }
+
+    /**
+     * Get header slots of the inventory and footer slots of the inventory. If the inventory size is under 27, all slots are returned.
+     *
+     * @return inventory headers and footers
+     */
+    public int[] getHeaderAndFooter() {
+        int size = this.inventory.getSize();
+        return IntStream.range(0, size)
+                .filter(i -> i < 9 || i >= (size - 9))
+                .toArray();
+    }
+
+    public void setHeaderAndFooter(ItemStack item) {
+        setItems(getHeaderAndFooter(), item);
     }
 
     /**
@@ -313,7 +337,18 @@ public class SimpleInventory implements InventoryHolder {
      */
     public int[] getBorders() {
         int size = this.inventory.getSize();
-        return IntStream.range(0, size).filter(i -> size < 27 || i < 9 || i % 9 == 0 || (i - 8) % 9 == 0 || i > size - 9).toArray();
+        return IntStream.range(0, size)
+                .filter(i -> size < 27 || i < 9 || i % 9 == 0 || (i - 8) % 9 == 0 || i > size - 9)
+                .toArray();
+    }
+
+    /**
+     * Set the item to {@link GuiBuilder#getBorders()} slots
+     *
+     * @param item
+     */
+    public void setBorders(ItemStack item) {
+        setItems(getBorders(), item);
     }
 
     /**
@@ -323,11 +358,18 @@ public class SimpleInventory implements InventoryHolder {
      */
     public int[] getCorners() {
         int size = this.inventory.getSize();
-        return IntStream.range(0, size).filter(i -> i < 2 || (i > 6 && i < 10) || i == 17 || i == size - 18 || (i > size - 11 && i < size - 7) || i > size - 3).toArray();
+        return IntStream.range(0, size)
+                .filter(
+                        i -> i < 2
+                                || (i > 6 && i < 10)
+                                || i == 17
+                                || i == size - 18
+                                || (i > size - 11 && i < size - 7)
+                                || i > size - 3)
+                .toArray();
     }
 
     /**
-     *
      * Set the inventory to unClosable.
      *
      * @param unCloseable If the inventory should be unCloseable
@@ -392,4 +434,9 @@ public class SimpleInventory implements InventoryHolder {
         }
     }
 
+    void handleDrag(InventoryDragEvent e) {
+        onDrag(e);
+
+        this.dragHandlers.forEach(c -> c.accept(e));
+    }
 }

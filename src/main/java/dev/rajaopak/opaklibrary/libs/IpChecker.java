@@ -1,4 +1,4 @@
-package dev.rajaopak.opaklibs.libs;
+package dev.rajaopak.opaklibrary.libs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 public class IpChecker {
 
     public static String getIpLocation(String ip) {
-        String url = "http://ip-api.com/json/" + ip;
+        String url = "https://ip-api.com/json/" + ip;
         JSONObject json = readJsonFromUrl(url);
 
         StringBuilder builder = new StringBuilder();

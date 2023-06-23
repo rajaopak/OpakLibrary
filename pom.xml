@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.rajaopak</groupId>
-    <artifactId>OpakLibs</artifactId>
+    <artifactId>OpakLibrary</artifactId>
     <version>0.0.9</version>
     <packaging>jar</packaging>
 
-    <name>OpakLibs</name>
+    <name>OpakLibrary</name>
 
     <properties>
         <java.version>8</java.version>
@@ -32,7 +32,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
-                    <finalName>OpakLibs-${project.version}</finalName>
+                    <finalName>OpakLibrary-${project.version}</finalName>
                     <outputDirectory>D:\server\bukkit\plugins</outputDirectory>
                 </configuration>
             </plugin>
@@ -117,6 +117,22 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20220320</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-api</artifactId>
+            <version>4.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bukkit</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.13.0</version>
         </dependency>
     </dependencies>
 </project>

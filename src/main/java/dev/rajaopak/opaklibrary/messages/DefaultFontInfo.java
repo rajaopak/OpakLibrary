@@ -1,4 +1,4 @@
-package dev.rajaopak.opaklibs.messages;
+package dev.rajaopak.opaklibrary.messages;
 
 public enum DefaultFontInfo {
 

@@ -1,6 +1,6 @@
-package dev.rajaopak.opaklibs.messages;
+package dev.rajaopak.opaklibrary.messages;
 
-import dev.rajaopak.opaklibs.libs.Common;
+import dev.rajaopak.opaklibrary.libs.Common;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 

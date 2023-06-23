@@ -1,4 +1,4 @@
-package dev.rajaopak.opaklibs.libs;
+package dev.rajaopak.opaklibrary.libs;
 
 import com.cryptomorin.xseries.SkullUtils;
 import com.mojang.authlib.GameProfile;

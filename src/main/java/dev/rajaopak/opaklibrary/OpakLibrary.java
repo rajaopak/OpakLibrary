@@ -1,13 +1,14 @@
-package dev.rajaopak.opaklibs;
+package dev.rajaopak.opaklibrary;
 
-import dev.rajaopak.opaklibs.inventory.SimpleInventoryManager;
-import dev.rajaopak.opaklibs.libs.Common;
-import dev.rajaopak.opaklibs.libs.MarkCooldown;
-import dev.rajaopak.opaklibs.libs.PlayerCooldown;
+import dev.rajaopak.opaklibrary.inventory.GuiBuilderManager;
+import dev.rajaopak.opaklibrary.libs.ChatSession;
+import dev.rajaopak.opaklibrary.libs.Common;
+import dev.rajaopak.opaklibrary.libs.MarkCooldown;
+import dev.rajaopak.opaklibrary.libs.PlayerCooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class OpakLibs {
+public class OpakLibrary {
 
     public static JavaPlugin INSTANCE;
     public static boolean PLACEHOLDER_API = false;
@@ -21,11 +22,10 @@ public class OpakLibs {
         cdMark = new MarkCooldown(plugin);
         PLACEHOLDER_API = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
 
-        new MarkCooldown(plugin);
-        new PlayerCooldown(plugin);
-        SimpleInventoryManager.register(plugin);
+        GuiBuilderManager.register(plugin);
 
-        Common.log("OpakLibs Successfully Loaded!");
+        plugin.getServer().getPluginManager().registerEvents(new ChatSession(), plugin);
+        Common.log("OpakLibrary Successfully Loaded!");
     }
 
     public static JavaPlugin getInstance() {

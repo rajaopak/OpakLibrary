@@ -1,4 +1,4 @@
-package dev.rajaopak.opaklibs.libs;
+package dev.rajaopak.opaklibrary.libs;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -9,6 +9,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class ConfigUpdater {
 
         FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(toUpdate);
         FileConfiguration newConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(Objects.requireNonNull(plugin.getResource(resourceName))));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(toUpdate), StandardCharsets.UTF_8));
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(Files.newOutputStream(toUpdate.toPath()), StandardCharsets.UTF_8));
 
         List<String> ignoredSectionsArrayList = new ArrayList<>(ignoredSections);
         //ignoredSections can ONLY contain configurations sections
@@ -103,7 +104,7 @@ public class ConfigUpdater {
 
             writer.write(prefixSpaces + actualKey + ": " + yaml.dump(obj));
         } else if (obj instanceof List) {
-            writeList((List) obj, actualKey, prefixSpaces, yaml, writer);
+            writeList((List<Object>) obj, actualKey, prefixSpaces, yaml, writer);
         } else {
             writer.write(prefixSpaces + actualKey + ": " + yaml.dump(obj));
         }
@@ -121,11 +122,11 @@ public class ConfigUpdater {
     }
 
     //  Writes a list of any object
-    private static void writeList(List list, String actualKey, String prefixSpaces, Yaml yaml, BufferedWriter writer) throws IOException {
+    private static void writeList(List<Object> list, String actualKey, String prefixSpaces, Yaml yaml, BufferedWriter writer) throws IOException {
         writer.write(getListAsString(list, actualKey, prefixSpaces, yaml));
     }
 
-    private static String getListAsString(List list, String actualKey, String prefixSpaces, Yaml yaml) {
+    private static String getListAsString(List<Object> list, String actualKey, String prefixSpaces, Yaml yaml) {
         StringBuilder builder = new StringBuilder(prefixSpaces).append(actualKey).append(":");
 
         if (list.isEmpty()) {
@@ -216,7 +217,7 @@ public class ConfigUpdater {
                 appendSection(builder, (ConfigurationSection) value, prefixSpaces, yaml);
                 prefixSpaces.setLength(prefixSpaces.length() - 2);
             } else if (value instanceof List) {
-                builder.append(getListAsString((List) value, actualKey, prefixSpaces.toString(), yaml));
+                builder.append(getListAsString((List<Object>) value, actualKey, prefixSpaces.toString(), yaml));
             } else {
                 builder.append(prefixSpaces).append(actualKey).append(": ").append(yaml.dump(value));
             }

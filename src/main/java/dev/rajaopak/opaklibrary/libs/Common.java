@@ -1,6 +1,6 @@
-package dev.rajaopak.opaklibs.libs;
+package dev.rajaopak.opaklibrary.libs;
 
-import dev.rajaopak.opaklibs.OpakLibs;
+import dev.rajaopak.opaklibrary.OpakLibrary;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class Common {
 
-    public static String PREFIX = "[OpakLibs]";
+    public static String PREFIX = "[OpakLibrary]";
     public static boolean USE_PREFIX = true;
 
     private static final String nmsVersion;
@@ -96,7 +96,7 @@ public class Common {
             return;
         }
 
-        if(sender instanceof Player && OpakLibs.PLACEHOLDER_API){
+        if(sender instanceof Player && OpakLibrary.PLACEHOLDER_API){
             if (usePrefix) {
                 sender.sendMessage(PlaceholderAPI.setPlaceholders((Player) sender, color(getPrefix() + message)));
                 return;
@@ -143,14 +143,14 @@ public class Common {
     }
 
     public static List<String> tryParsePAPI(Player player, List<String> messages){
-        if(OpakLibs.PLACEHOLDER_API){
+        if(OpakLibrary.PLACEHOLDER_API){
             return PlaceholderAPI.setPlaceholders(player, color(messages));
         }
         return color(messages);
     }
 
     public static String tryParsePAPI(Player player, String message){
-        if(OpakLibs.PLACEHOLDER_API){
+        if(OpakLibrary.PLACEHOLDER_API){
             return PlaceholderAPI.setPlaceholders(player, color(message));
         }
         return color(message);
@@ -158,7 +158,7 @@ public class Common {
 
     public static void log(String... messages) {
         for (String message : messages) {
-            OpakLibs.INSTANCE.getLogger().info(color(message));
+            OpakLibrary.INSTANCE.getLogger().info(color(message));
         }
     }
 

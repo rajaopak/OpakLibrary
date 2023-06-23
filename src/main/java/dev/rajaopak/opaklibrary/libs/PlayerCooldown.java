@@ -1,4 +1,4 @@
-package dev.rajaopak.opaklibs.libs;
+package dev.rajaopak.opaklibrary.libs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

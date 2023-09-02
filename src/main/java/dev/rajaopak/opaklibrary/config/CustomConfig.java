@@ -1,4 +1,4 @@
-package dev.rajaopak.opaklibrary.libs;
+package dev.rajaopak.opaklibrary.config;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

@@ -26,16 +26,14 @@ public class GuiBuilderManager {
     /**
      * Register listeners for SimpleInventory.
      *
-     * @param plugin plugin to register
-     * @throws NullPointerException if plugin is null
      * @throws IllegalStateException if SimpleInventory is already registered
      */
-    public static void register(Plugin plugin) {
+    public static void register() {
         if (REGISTERED.getAndSet(true)) {
             throw new IllegalStateException("OpakInventory is already registered");
         }
 
-        Bukkit.getPluginManager().registerEvents(new InventoryListener(plugin), plugin);
+        Bukkit.getPluginManager().registerEvents(new InventoryListener(OpakLibrary.INSTANCE), OpakLibrary.INSTANCE);
     }
 
     /**

@@ -14,13 +14,13 @@ import java.util.function.Function;
 
 public class ChatSession implements Listener {
 
+    private final Plugin plugin;
     private Player player;
-    private Plugin plugin;
     private Function<Complete, Action> completeActionFunction;
     private Consumer<Player> closeListener;
 
-    public ChatSession plugin(Plugin plugin) {
-        this.plugin = plugin;
+    public ChatSession plugin() {
+        this.plugin = OpakLibrary.INSTANCE;
         return this;
     }
 

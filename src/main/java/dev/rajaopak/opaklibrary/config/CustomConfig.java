@@ -12,7 +12,8 @@ public class CustomConfig {
     private final File file;
     private FileConfiguration config;
 
-    public CustomConfig(JavaPlugin plugin, String configName, String directory) {
+    public CustomConfig(String configName, String directory) {
+        JavaPlugin plugin = OpakLibrary.getInstance();
 
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdirs();

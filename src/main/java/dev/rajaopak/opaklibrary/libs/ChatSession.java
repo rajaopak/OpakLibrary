@@ -1,5 +1,6 @@
 package dev.rajaopak.opaklibrary.libs;
 
+import dev.rajaopak.opaklibrary.OpakLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,13 +15,13 @@ import java.util.function.Function;
 
 public class ChatSession implements Listener {
 
-    private final Plugin plugin;
+    private Plugin plugin;
     private Player player;
     private Function<Complete, Action> completeActionFunction;
     private Consumer<Player> closeListener;
 
-    public ChatSession plugin() {
-        this.plugin = OpakLibrary.INSTANCE;
+    public ChatSession plugin(Plugin plugin) {
+        this.plugin = plugin;
         return this;
     }
 

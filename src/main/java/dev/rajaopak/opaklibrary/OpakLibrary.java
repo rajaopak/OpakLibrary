@@ -22,7 +22,7 @@ public class OpakLibrary {
         cdMark = new MarkCooldown(plugin);
         PLACEHOLDER_API = Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null;
 
-        GuiBuilderManager.register(plugin);
+        GuiBuilderManager.register();
 
         plugin.getServer().getPluginManager().registerEvents(new ChatSession(), plugin);
         Common.log("OpakLibrary Successfully Loaded!");

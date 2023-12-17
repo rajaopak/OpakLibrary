@@ -1,5 +1,6 @@
 package dev.rajaopak.opaklibrary.inventory;
 
+import dev.rajaopak.opaklibrary.OpakLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -1,5 +1,6 @@
 package dev.rajaopak.opaklibrary.config;
 
+import dev.rajaopak.opaklibrary.OpakLibrary;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;

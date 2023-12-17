@@ -7,6 +7,7 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +40,8 @@ public class ItemBuilder implements Cloneable {
         this.meta = item.getItemMeta();
 
         if (this.meta == null) {
-            throw new IllegalArgumentException("The type " + item.getType() + " doesn't support item meta");
+            throw new IllegalArgumentException(
+                    "The type " + item.getType() + " doesn't support item meta");
         }
     }
 
@@ -53,6 +55,74 @@ public class ItemBuilder implements Cloneable {
         return new ItemBuilder(material);
     }
 
+    public static ItemStack fromConfig(ConfigurationSection config) {
+        return fromConfig(null, config);
+    }
+
+
+    /**
+     * @param material the material, set to null if you want to get the material from config
+     * @param config the configuration section of the item data
+     * @return item stack, return null if material in config section is null or not match any material.
+     */
+    public static ItemStack fromConfig(Material material, ConfigurationSection config) {
+        if (material == null && config.getString("material") == null) return null;
+
+        if (material == null) material = Material.matchMaterial(config.getString("material"));
+
+        if (material == Material.AIR) return new ItemStack(Material.AIR);
+
+        ItemBuilder builder = new ItemBuilder(material);
+
+        if (config.getString("name") != null) {
+            builder.setName(config.getString("name"));
+        }
+
+        if (config.getInt("custom-model-data") != 0) {
+            builder.customModelData(config.getInt("custom-model-data"));
+        }
+
+        if (config.getBoolean("unbreakable")) {
+            builder.setUnbreakable(true);
+        }
+
+        if (config.getBoolean("glow")) {
+            builder.setGlowing();
+        }
+
+        if (config.getString("texture") != null) {
+            if (builder.getItem().getType() == Material.PLAYER_HEAD) {
+                builder.setSkullByTexture(config.getString("texture"));
+            }
+        }
+
+        builder.setLore(config.getStringList("lore"));
+
+        HashMap<Enchantment, Integer> enchants = new HashMap<>();
+
+        config.getStringList("enchantments").forEach(s -> {
+            String[] args = s.split(";");
+
+            Enchantment enchant = Enchantment.getByKey(NamespacedKey.fromString(args[0].toLowerCase()));
+            int level = Integer.parseInt(args[1]);
+
+            if (enchant == null) return;
+
+            enchants.put(enchant, level);
+        });
+
+        builder.setEnchants(enchants, true);
+
+        config.getStringList("flags").forEach(s -> {
+            try {
+                builder.setFlags(ItemFlag.valueOf(s));
+            } catch (IllegalArgumentException ignore) {
+            }
+        });
+
+        return builder.build();
+    }
+
     public ItemBuilder setType(Material material) {
         this.item.setType(material);
         return this;
@@ -62,13 +132,13 @@ public class ItemBuilder implements Cloneable {
         return item;
     }
 
-    public ItemMeta getMeta() {
-        return meta;
-    }
-
     public ItemBuilder setItem(ItemStack item) {
         this.item = item;
         return this;
+    }
+
+    public ItemMeta getMeta() {
+        return meta;
     }
 
     public ItemBuilder setMeta(ItemMeta meta) {
@@ -78,10 +148,7 @@ public class ItemBuilder implements Cloneable {
 
     @Override
     public String toString() {
-        return "ItemBuilder{" +
-                "item=" + item.toString() +
-                ", meta=" + meta.toString() +
-                '}';
+        return "ItemBuilder{" + "item=" + item.toString() + ", meta=" + meta.toString() + '}';
     }
 
     @NotNull
@@ -100,8 +167,8 @@ public class ItemBuilder implements Cloneable {
 
             return clone;
         } catch (CloneNotSupportedException e) {
-            Common.log("&cFailed to clone ItemBuilder!");
-            throw new Error(e);
+            Debug.warn("&cFailed to clone ItemBuilder!");
+            throw new RuntimeException(e);
         }
     }
 
@@ -130,7 +197,8 @@ public class ItemBuilder implements Cloneable {
         return setEnchant(enchantment, level, false);
     }
 
-    public ItemBuilder setEnchant(Enchantment enchantment, int level, boolean ignoreLevelRestriction) {
+    public ItemBuilder setEnchant(
+            Enchantment enchantment, int level, boolean ignoreLevelRestriction) {
         this.meta.addEnchant(enchantment, level, ignoreLevelRestriction);
         return this;
     }
@@ -142,7 +210,8 @@ public class ItemBuilder implements Cloneable {
         return this;
     }
 
-    public ItemBuilder setEnchants(Map<Enchantment, Integer> enchants, boolean ignoreLevelRestriction) {
+    public ItemBuilder setEnchants(
+            Map<Enchantment, Integer> enchants, boolean ignoreLevelRestriction) {
         for (Map.Entry<Enchantment, Integer> enchantment : enchants.entrySet()) {
             setEnchant(enchantment.getKey(), enchantment.getValue(), ignoreLevelRestriction);
         }
@@ -172,8 +241,16 @@ public class ItemBuilder implements Cloneable {
     }
 
     public ItemBuilder setName(String name) {
-        this.meta.setDisplayName(Common.color(name));
+        this.meta.setDisplayName(ChatUtil.color(name));
         return this;
+    }
+
+    public String getName() {
+        return this.meta.getDisplayName();
+    }
+
+    public List<String> getLore() {
+        return this.meta.getLore();
     }
 
     public ItemBuilder setLore(String lore) {
@@ -185,7 +262,7 @@ public class ItemBuilder implements Cloneable {
     }
 
     public ItemBuilder setLore(List<String> lore) {
-        this.meta.setLore(Common.color(lore));
+        this.meta.setLore(ChatUtil.color(lore));
         return this;
     }
 
@@ -276,6 +353,10 @@ public class ItemBuilder implements Cloneable {
         return -1;
     }
 
+    public boolean isUnbreakable() {
+        return this.meta.isUnbreakable();
+    }
+
     public ItemBuilder setUnbreakable(boolean unbreakable) {
         this.meta.setUnbreakable(unbreakable);
         return this;
@@ -310,48 +391,46 @@ public class ItemBuilder implements Cloneable {
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, String s) {
+    public boolean hasPDC(NamespacedKey key, PersistentDataType<?, ?> dataType) {
+        return this.meta.getPersistentDataContainer().has(key, dataType);
+    }
+
+    public <N> N getPDC(NamespacedKey key, PersistentDataType<?, N> dataType) {
+        return this.meta.getPersistentDataContainer().get(key, dataType);
+    }
+
+    public ItemBuilder removePDC(NamespacedKey key) {
+        this.meta.getPersistentDataContainer().remove(key);
+        return this;
+    }
+
+    public ItemBuilder setPDC(NamespacedKey key, String s) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.STRING, s);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Double d) {
+    public ItemBuilder setPDC(NamespacedKey key, Double d) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.DOUBLE, d);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Float f) {
+    public ItemBuilder setPDC(NamespacedKey key, Float f) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.FLOAT, f);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Integer i) {
+    public ItemBuilder setPDC(NamespacedKey key, Integer i) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.INTEGER, i);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Long l) {
+    public ItemBuilder setPDC(NamespacedKey key, Long l) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.LONG, l);
         return this;
     }
 
-    public ItemBuilder pdc(NamespacedKey key, Byte b) {
+    public ItemBuilder setPDC(NamespacedKey key, Byte b) {
         this.meta.getPersistentDataContainer().set(key, PersistentDataType.BYTE, b);
-        return this;
-    }
-
-    public ItemBuilder setSkull(String identifier) {
-        SkullUtils.applySkin(this.meta, identifier);
-        return this;
-    }
-
-    public ItemBuilder setSkull(OfflinePlayer identifier) {
-        SkullUtils.applySkin(this.meta, identifier);
-        return this;
-    }
-
-    public ItemBuilder setSkull(UUID identifier) {
-        SkullUtils.applySkin(this.meta, identifier);
         return this;
     }
 

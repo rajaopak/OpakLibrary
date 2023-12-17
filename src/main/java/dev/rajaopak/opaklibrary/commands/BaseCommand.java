@@ -1,8 +1,11 @@
 package dev.rajaopak.opaklibrary.commands;
 
-import dev.rajaopak.opaklibrary.libs.Common;
+import dev.rajaopak.opaklibrary.libs.Debug;
+import dev.rajaopak.opaklibrary.libs.VersionChecker;
 import org.bukkit.Bukkit;
-import org.bukkit.command.*;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,7 +16,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.function.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 /**
  * modified by rajaopak
@@ -64,7 +68,7 @@ public class BaseCommand extends Command implements Listener {
     }
 
     public void register() {
-        String version = Common.getNmsVersion();
+        String version = VersionChecker.getNmsVersion();
         switch (version) {
             case "v1_8_R3":
             case "v1_9_R1":
@@ -76,7 +80,6 @@ public class BaseCommand extends Command implements Listener {
             }
             default: {
                 Bukkit.getPluginManager().registerEvents(this, plugin);
-                break;
             }
         }
         try {
@@ -85,14 +88,14 @@ public class BaseCommand extends Command implements Listener {
             CommandMap commandMap = (CommandMap) commandMapField.get(Bukkit.getServer());
             commandMap.register(getLabel(), this);
         } catch (Exception e) {
-            Common.log("&cFailed to register command! [" + getName() + "]");
+            Debug.error("&cFailed to register command! [" + getName() + "]");
             e.printStackTrace();
         }
     }
 
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args) {
-        if(COMMAND_PERMISSION != null && !sender.hasPermission(COMMAND_PERMISSION)){
+        if (COMMAND_PERMISSION != null && !sender.hasPermission(COMMAND_PERMISSION)) {
             onNoPermission.accept(sender);
             return true;
         }
@@ -119,7 +122,14 @@ public class BaseCommand extends Command implements Listener {
             return true;
         }
 
-        subCommand.execute(plugin, sender, args);
+        String[] subArgs = new String[args.length - 1];
+
+        for (int i = 0; i < args.length; i++) {
+            if (i < 1) continue;
+            subArgs[i - 1] = args[i];
+        }
+
+        subCommand.execute(plugin, sender, subArgs);
         return true;
     }
 
@@ -157,14 +167,20 @@ public class BaseCommand extends Command implements Listener {
             }
             return suggestions;
         }
-        if (args.length >= 2) {
+        if (args.length > 1) {
             SubCommand subCommand = subCommandMap.get(args[0].toLowerCase());
             if (subCommand == null) {
-                return new ArrayList<>();
+                return Collections.emptyList();
             }
-            if (subCommand.getPermission() == null ||
-                    sender.hasPermission(subCommand.getPermission())) {
-                return Objects.requireNonNull(subCommand.parseTabCompletions(plugin, sender, args));
+            if (subCommand.getPermission() == null || sender.hasPermission(subCommand.getPermission())) {
+                String[] subArgs = new String[args.length - 1];
+
+                for (int i = 0; i < args.length; i++) {
+                    if (i == 0) continue;
+                    subArgs[i - 1] = args[i];
+                }
+
+                return Objects.requireNonNull(subCommand.parseTabCompletions(plugin, sender, subArgs));
             }
         }
 
